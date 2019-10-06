@@ -3,7 +3,7 @@ context("visualize")
 library(dplyr)
 library(vdiffr)
 
-set.seed(42)
+set.seed(43)
 
 Sepal.Width_resamp <- iris %>%
   specify(Sepal.Width ~ NULL) %>%
