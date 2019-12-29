@@ -76,7 +76,7 @@ tests and tests of independence." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">infer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1.9000</span>
       </span>
     </div>
 
@@ -90,22 +90,19 @@ tests and tests of independence." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/infer.html">infer</a>
+      <a href="../articles/infer.html">Getting to Know infer</a>
     </li>
     <li>
-      <a href="../articles/chisq_test.html">Chi-square Test Example</a>
+      <a href="../articles/t_test.html">t-Tests</a>
     </li>
     <li>
-      <a href="../articles/two_sample_t.html">Two-Sample t-test Example</a>
+      <a href="../articles/anova.html">ANOVA</a>
     </li>
     <li>
-      <a href="../articles/observed_stat_examples.html">Observed Statistic Calculation Examples</a>
+      <a href="../articles/chi_squared.html">Chi-Squared</a>
     </li>
     <li>
-      <a href="../articles/flights_examples.html">Simulation-Based `flights` Examples</a>
-    </li>
-    <li>
-      <a href="../articles/mtcars_examples.html">Examples using `mtcars`</a>
+      <a href="../articles/observed_stat_examples.html">Full infer Pipeline Examples</a>
     </li>
   </ul>
 </li>
@@ -193,13 +190,25 @@ explanatory variable.</p></td>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># chisq test for comparing number of cylinders against automatic/manual</span>
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span>(<span class='kw'>cyl</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>cyl</span>), <span class='kw'>am</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span>(<span class='no'>am</span>)) <span class='kw'>%&gt;%</span>
-  <span class='fu'>chisq_test</span>(<span class='no'>cyl</span> ~ <span class='no'>am</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; # A tibble: 1 x 3
+    <pre class="examples"><div class='input'><span class='co'># chi-squared test of independence for college completion </span>
+<span class='co'># status depending on one's self-identified income class</span>
+<span class='fu'>chisq_test</span>(<span class='no'>gss</span>, <span class='no'>college</span> ~ <span class='no'>finrela</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
+#&gt;   statistic chisq_df  p_value
+#&gt;       &lt;dbl&gt;    &lt;int&gt;    &lt;dbl&gt;
+#&gt; 1      225.        5 1.30e-46</div><div class='input'>
+<span class='co'># chi-squared goodness of fit test on whether self-identified </span>
+<span class='co'># income class follows a uniform distribution</span>
+<span class='fu'>chisq_test</span>(<span class='no'>gss</span>,
+           <span class='kw'>response</span> <span class='kw'>=</span> <span class='no'>finrela</span>,
+           <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"far below average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"below average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"above average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"far above average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"DK"</span> <span class='kw'>=</span> <span class='fl'>.165</span>))</div><div class='output co'>#&gt; # A tibble: 1 x 3
 #&gt;   statistic chisq_df p_value
-#&gt;       &lt;dbl&gt;    &lt;int&gt;   &lt;dbl&gt;
-#&gt; 1      8.74        2  0.0126</div><div class='input'>
+#&gt;       &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1     2769.        5       0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -77,7 +77,7 @@ correction." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">infer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1.9000</span>
       </span>
     </div>
 
@@ -91,22 +91,19 @@ correction." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/infer.html">infer</a>
+      <a href="../articles/infer.html">Getting to Know infer</a>
     </li>
     <li>
-      <a href="../articles/chisq_test.html">Chi-square Test Example</a>
+      <a href="../articles/t_test.html">t-Tests</a>
     </li>
     <li>
-      <a href="../articles/two_sample_t.html">Two-Sample t-test Example</a>
+      <a href="../articles/anova.html">ANOVA</a>
     </li>
     <li>
-      <a href="../articles/observed_stat_examples.html">Observed Statistic Calculation Examples</a>
+      <a href="../articles/chi_squared.html">Chi-Squared</a>
     </li>
     <li>
-      <a href="../articles/flights_examples.html">Simulation-Based `flights` Examples</a>
-    </li>
-    <li>
-      <a href="../articles/mtcars_examples.html">Examples using `mtcars`</a>
+      <a href="../articles/observed_stat_examples.html">Full infer Pipeline Examples</a>
     </li>
   </ul>
 </li>
@@ -194,11 +191,29 @@ explanatory variable.</p></td>
     </table>
 
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># chi-squared test statistic for test of independence </span>
+<span class='co'># of college completion status depending and one's </span>
+<span class='co'># self-identified income class</span>
+<span class='fu'>chisq_stat</span>(<span class='no'>gss</span>, <span class='no'>college</span> ~ <span class='no'>finrela</span>)</div><div class='output co'>#&gt; [1] 224.9394</div><div class='input'>
+<span class='co'># chi-squared test statistic for a goodness of fit </span>
+<span class='co'># test on whether self-identified income class </span>
+<span class='co'># follows a uniform distribution</span>
+<span class='fu'>chisq_stat</span>(<span class='no'>gss</span>,
+           <span class='kw'>response</span> <span class='kw'>=</span> <span class='no'>finrela</span>,
+           <span class='kw'>p</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"far below average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"below average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"above average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"far above average"</span> <span class='kw'>=</span> <span class='fl'>.167</span>,
+                 <span class='st'>"DK"</span> <span class='kw'>=</span> <span class='fl'>.165</span>))</div><div class='output co'>#&gt; [1] 2769.415</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>
