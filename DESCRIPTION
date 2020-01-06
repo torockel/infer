@@ -30,7 +30,9 @@ Imports:
     glue (>= 1.3.0),
     grDevices,
     purrr,
-    lifecycle
+    lifecycle,
+    learnr,
+    gradethis
 Depends:
     R (>= 3.1.2)
 Suggests: 

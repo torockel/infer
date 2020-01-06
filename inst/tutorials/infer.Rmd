@@ -1,0 +1,55 @@
+---
+title: "Getting to Know infer"
+output: 
+  learnr::tutorial:
+    progressive: true
+    allow_skip: true
+    df_print: default
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(tidyverse)
+library(infer)
+tutorial_options(exercise.timelimit = 60,
+                 exercise.checker = gradethis::grade_learnr)
+```
+
+## Welcome
+
+In this tutorial, you will learn how to use the `infer` R package to conduct hypothesis tests on tidy data. Rather than providing methods for specific statistical tests, this package consolidates the principles that are shared among common hypothesis tests into a set of 4 main verbs (functions), supplemented with many utilities to visualize and extract value from their outputs.
+
+### The 4 Main Verbs
+
+The workflow of this package is designed around four main verbs. Starting out with some dataset,
+
++ `specify()` allows you to specify the variable, or relationship between variables, that you're interested in.
++ `hypothesize()` allows you to declare the null hypothesis.
++ `generate()` allows you to generate data reflecting the null hypothesis.
++ `calculate()` allows you to calculate a distribution of statistics from the generated data to form the null distribution.
+
+
+### The `gss` dataframe
+
+Throughout this tutorial, we'll make use of the `gss` dataset supplied by `infer`, containing a sample of 3000 observations of 11 variables from the *General Social Survey*. Print the `gss` dataset to check it out!
+
+```{r gss, exercise = TRUE}
+# check out the `gss` dataset
+```
+
+<div id="gss-hint">
+**Hint:** Type `gss` and then click the Submit Answer button.
+</div>
+
+```{r gss-solution}
+gss
+```
+
+```{r gss-check}
+gradethis::grade_code(gradethis::random_praise())
+```
+
+
+
