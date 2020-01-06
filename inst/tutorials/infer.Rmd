@@ -21,7 +21,34 @@ tutorial_options(exercise.timelimit = 60,
 
 In this tutorial, you will learn how to use the `infer` R package to conduct hypothesis tests on tidy data. Rather than providing methods for specific statistical tests, this package consolidates the principles that are shared among common hypothesis tests into a set of 4 main verbs (functions), supplemented with many utilities to visualize and extract value from their outputs.
 
-### The 4 Main Verbs
+
+### The `gss` Dataset
+
+Throughout this tutorial, we'll make use of the `gss` dataset supplied by `infer`, containing a sample of 3000 observations of 11 variables from the *General Social Survey*. Print the `gss` dataset to check it out!
+
+```{r gss, exercise = TRUE}
+# check out the `gss` dataset
+```
+
+
+```{r gss-hint-1}
+"Type `gss` and then click the Submit Answer button."
+```
+
+```{r gss-solution}
+gss
+```
+
+```{r gss-check}
+gradethis::grade_code(paste0(gradethis::random_praise(),
+                        " Each of these rows is a survey response, containing",
+                        " demographic information on the respondent as well",
+                        " as some of their responses. See ?gss for more",
+                        " information!"))
+```
+
+
+## The 4 Main Verbs
 
 The workflow of this package is designed around four main verbs. Starting out with some dataset,
 
@@ -31,25 +58,178 @@ The workflow of this package is designed around four main verbs. Starting out wi
 + `calculate()` allows you to calculate a distribution of statistics from the generated data to form the null distribution.
 
 
-### The `gss` dataframe
+## specify()
 
-Throughout this tutorial, we'll make use of the `gss` dataset supplied by `infer`, containing a sample of 3000 observations of 11 variables from the *General Social Survey*. Print the `gss` dataset to check it out!
+The `specify` function can be used to specify which of the variable(s) in the dataset you're interested in. If you're only interested in, say, the `age` of the respondents, you might write:
 
-```{r gss, exercise = TRUE}
-# check out the `gss` dataset
+```{r specify_example, warning = FALSE, message = FALSE}
+gss %>%
+  specify(response = age)
 ```
 
-<div id="gss-hint">
-**Hint:** Type `gss` and then click the Submit Answer button.
-</div>
+On the front-end, the output of `specify` just looks like it selects off the columns in the dataframe that you've specified. Checking the class of this object, though:
 
-```{r gss-solution}
-gss
+```{r specify-one, warning = FALSE, message = FALSE}
+gss %>%
+  specify(response = age) %>%
+  class()
 ```
 
-```{r gss-check}
-gradethis::grade_code(gradethis::random_praise())
+We can see that the `infer` class has been appended on top of the dataframe classes--this new class stores some extra metadata.
+
+## 
+
+### Exercise
+
+Let's try this out. Use `specify()` to specify interest in the `hours` variable.
+
+```{r specify, exercise = TRUE, warning = FALSE, message = FALSE}
+
+```
+
+```{r specify-hint-1}
+"Try piping `gss` into `specify(response = hours)` and then clicking the Submit Answer button."
+```
+
+```{r specify-hint-2}
+"Type `gss %>% specify(response = hours)` and then click the Submit Answer button."
 ```
 
 
+```{r specify-solution}
+gss %>% specify(response = hours)
+```
 
+```{r specify-check}
+gradethis::grade_code(paste0(gradethis::random_praise()))
+```
+
+##
+
+### specify() Two Variables
+
+If you're interested in two variables--`age` and `partyid`, for example--you can `specify` their relationship in one of two (equivalent) ways:
+
+```{r specify-two-example, eval = FALSE}
+# as a formula
+gss %>%
+  specify(age ~ partyid)
+
+# with the named arguments
+gss %>%
+  specify(response = age, explanatory = partyid)
+```
+
+Let's give this a shot, specifying interest in `hours` as a function of `college` with whichever syntax you prefer.
+
+```{r specify-two, exercise = TRUE, warning = FALSE, message = FALSE}
+
+```
+
+```{r specify-two-hint-1}
+"Try piping `gss` into `specify(response = hours, explanatory = college)` and then clicking the Submit Answer button."
+```
+
+```{r specify-two-hint-2}
+"Type `gss %>% specify(response = hours, explanatory = college)` and then click the Submit Answer button."
+```
+
+```{r specify-two-check}
+gradethis::grade_result(
+  pass_if(~ identical(.result, gss %>% specify(response = hours, 
+                                               explanatory = college)),
+          gradethis::random_praise()))
+```
+
+## 
+
+### specify() With Proportions
+
+If you're doing inference on one proportion or a difference in proportions, you will need to use the `success` argument to specify which level of your `response` variable is a success. For instance, if you're interested in the proportion of the population with a college degree, you might use the following code:
+
+```{r specify-success, eval = FALSE}
+# specifying for inference on proportions
+gss %>%
+  specify(response = college, success = "degree")
+```
+
+## hypothesize()
+
+The next step in the `infer` pipeline is often to declare a null hypothesis using `hypothesize()`. The first step is to supply one of `"independence"` or `"point"` to the `null` argument. If your null hypothesis assumes independence between two variables, then this is all you need to supply to `hypothesize()`:
+
+```{r hypothesize-independence-example, eval = FALSE}
+gss %>%
+  specify(age ~ partyid) %>%
+  hypothesize(null = "independence")
+```
+
+Again, if we ran this code,  the dataframe outputted from `hypothesize()` would look almost exactly the same as it did when it came out of `specify()`, but `infer` now "knows" your null hypothesis.
+
+##
+
+### Exercise
+
+Starting off from the code we used to `specify()` the `hours` and `college`, `hypothesize()` that these two variables are independent of each other.
+
+```{r hypothesize-two, exercise = TRUE, warning = FALSE, message = FALSE}
+gss %>% 
+  specify(response = hours, explanatory = college)
+```
+
+```{r hypothesize-two-hint-1}
+"Try piping the provided code into `hypothesize(null = \"independence\")` and then clicking the Submit Answer button."
+```
+
+```{r hypothesize-two-hint-2}
+paste0("Type `gss %>% specify(response = hours, explanatory = college) ",
+       "%>% hypothesize(null = \"independence\")` and then click the ",
+       "Submit Answer button.")
+```
+
+```{r hypothesize-two-check}
+gradethis::grade_result(
+  pass_if(~ identical(.result, gss %>% 
+                        specify(response = hours,
+                                explanatory = college) %>%
+                        hypothesize("independence")),
+          gradethis::random_praise()))
+```
+
+
+##
+
+### Inference with Point Estimates
+
+If you're doing inference on a point estimate, you will also need to provide one of `p` (the true proportion of successes, between 0 and 1), `mu` (the true mean), `med` (the true median), or `sigma` (the true standard deviation). For instance, if the null hypothesis is that the mean number of hours Americans work per week is 40, we would write:
+
+```{r hypothesize-40-hr-week, eval = FALSE}
+gss %>%
+  specify(response = hours) %>%
+  hypothesize(null = "point", mu = 40)
+```
+
+Alter the code from above to hypothesize that the true standard deviation of hours worked per week is 10.
+
+```{r hypothesize-one, exercise = TRUE, warning = FALSE, message = FALSE}
+gss %>%
+  specify(response = hours) %>%
+  hypothesize(null = "point", mu = 40)
+```
+
+```{r hypothesize-one-hint-1}
+"The argument to put in place of `mu` is `sigma`."
+```
+
+```{r hypothesize-one-hint-2}
+paste0("Type `gss %>% specify(response = hours) %>%",
+       "hypothesize(null = \"point\", sigma = 10)` and then click the ",
+       "Submit Answer button.")
+```
+
+```{r hypothesize-one-check}
+gradethis::grade_result(
+  pass_if(~ identical(.result, gss %>%
+                        specify(response = hours) %>%
+                        hypothesize(null = "point", sigma = 10)),
+          gradethis::random_praise()))
+```
