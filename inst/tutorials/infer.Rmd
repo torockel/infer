@@ -32,7 +32,7 @@ Throughout this tutorial, we'll make use of the `gss` dataset supplied by `infer
 
 
 ```{r gss-hint-1}
-"Type `gss` and then click the Submit Answer button."
+# Type `gss` and then click the Submit Answer button.
 ```
 
 ```{r gss-solution}
@@ -81,18 +81,20 @@ We can see that the `infer` class has been appended on top of the dataframe clas
 
 ### Exercise
 
-Let's try this out. Use `specify()` to specify interest in the `hours` variable.
+Let's try this out. Use `specify()` to specify interest in the `hours` variable from the `gss` dataset.
 
 ```{r specify, exercise = TRUE, warning = FALSE, message = FALSE}
 
 ```
 
 ```{r specify-hint-1}
-"Try piping `gss` into `specify(response = hours)` and then clicking the Submit Answer button."
+# Try piping `gss` into `specify(response = hours)` 
+# and then clicking the Submit Answer button.
 ```
 
 ```{r specify-hint-2}
-"Type `gss %>% specify(response = hours)` and then click the Submit Answer button."
+# Type `gss %>% specify(response = hours)` 
+# and then click the Submit Answer button.
 ```
 
 
@@ -127,17 +129,20 @@ Let's give this a shot, specifying interest in `hours` as a function of `college
 ```
 
 ```{r specify-two-hint-1}
-"Try piping `gss` into `specify(response = hours, explanatory = college)` and then clicking the Submit Answer button."
+# Try piping `gss` into `specify(response = hours, explanatory = college)` 
+# and then clicking the Submit Answer button.
 ```
 
-```{r specify-two-hint-2}
-"Type `gss %>% specify(response = hours, explanatory = college)` and then click the Submit Answer button."
+```{r specify-two-hint-2, eval = FALSE}
+# Type `gss %>% specify(response = hours, explanatory = college)` 
+# and then click the Submit Answer button.
 ```
 
 ```{r specify-two-check}
 gradethis::grade_result(
-  pass_if(~ identical(.result, gss %>% specify(response = hours, 
-                                               explanatory = college)),
+  gradethis::pass_if(~ identical(.result, gss %>% 
+                                   specify(response = hours, 
+                                           explanatory = college)),
           gradethis::random_praise()))
 ```
 
@@ -177,21 +182,24 @@ gss %>%
 ```
 
 ```{r hypothesize-two-hint-1}
-"Try piping the provided code into `hypothesize(null = \"independence\")` and then clicking the Submit Answer button."
+# Try piping the provided code into `hypothesize(null = \"independence\")` 
+# and then clicking the Submit Answer button."
 ```
 
-```{r hypothesize-two-hint-2}
-paste0("Type `gss %>% specify(response = hours, explanatory = college) ",
-       "%>% hypothesize(null = \"independence\")` and then click the ",
-       "Submit Answer button.")
+```{r hypothesize-two-hint-2, eval = FALSE}
+# Type: 
+gss %>% 
+  specify(response = hours, explanatory = college)
+  hypothesize(null = "independence")
+# and then click the Submit Answer button.
 ```
 
 ```{r hypothesize-two-check}
 gradethis::grade_result(
-  pass_if(~ identical(.result, gss %>% 
-                        specify(response = hours,
-                                explanatory = college) %>%
-                        hypothesize("independence")),
+  gradethis::pass_if(~ identical(.result, gss %>% 
+                          specify(response = hours,
+                                  explanatory = college) %>%
+                          hypothesize("independence")),
           gradethis::random_praise()))
 ```
 
@@ -217,19 +225,113 @@ gss %>%
 ```
 
 ```{r hypothesize-one-hint-1}
-"The argument to put in place of `mu` is `sigma`."
+# The argument to put in place of `mu` is `sigma`.
 ```
 
-```{r hypothesize-one-hint-2}
-paste0("Type `gss %>% specify(response = hours) %>%",
-       "hypothesize(null = \"point\", sigma = 10)` and then click the ",
-       "Submit Answer button.")
+```{r hypothesize-one-hint-2, eval = FALSE}
+# Type:
+gss %>% 
+  specify(response = hours) %>%
+  hypothesize(null = "point", sigma = 10)
+# and then click the Submit Answer button.
 ```
 
 ```{r hypothesize-one-check}
 gradethis::grade_result(
-  pass_if(~ identical(.result, gss %>%
-                        specify(response = hours) %>%
-                        hypothesize(null = "point", sigma = 10)),
+  gradethis::pass_if(~ identical(.result, gss %>%
+                           specify(response = hours) %>%
+                           hypothesize(null = "point", sigma = 10)),
           gradethis::random_praise()))
+```
+
+
+## generate()
+
+Once we've asserted our null hypothesis using `hypothesize()`, we can construct a reference distribution based on this hypothesis. We can do this using one of several methods, supplied in the `type` argument:
+
+* `bootstrap`: A bootstrap sample will be drawn for each replicate, where a sample of size equal to the input sample size is drawn (with replacement) from the input sample data.  
+* `permute`: For each replicate, each input value will be randomly reassigned (without replacement) to a new output value in the sample.  
+* `simulate`: A value will be sampled from a theoretical distribution with parameters specified in `hypothesize()` for each replicate. (This option is currently only applicable for testing point estimates.) 
+
+Continuing on with our example from earlier, about the average number of hours worked a week, we might write:
+
+```{r generate-point-example, eval = FALSE}
+gss %>%
+  specify(response = hours) %>%
+  hypothesize(null = "point", mu = 40) %>%
+  generate(reps = 1000, type = "bootstrap")
+```
+
+In the above example, we take 1000 bootstrap samples to form our reference distribution for the true mean number of hours worked per week. Modify the code below to generate a reference distribution for the true **median** number of hours worked per week from 500 repetitions drawn using the `bootstrap` generation type.
+
+```{r generate-point, exercise = TRUE, warning = FALSE, message = FALSE}
+gss %>%
+  specify(response = hours) %>%
+  hypothesize(null = "point", mu = 40) %>%
+  generate(reps = 1000, type = "bootstrap")
+```
+
+```{r generate-point-hint-1}
+# The argument to put in place of `mu` is `med`.
+```
+
+```{r generate-point-hint-2, eval = FALSE}
+# Type: 
+gss %>% 
+  specify(response = hours) %>%
+  hypothesize(null = "point", med = 40) %>%
+  generate(reps = 500, type = "bootstrap")
+# and then click the Submit Answer button.
+```
+
+```{r generate-point-solution}
+gss %>% 
+  specify(response = hours) %>%
+  hypothesize(null = "point", med = 40) %>%
+  generate(reps = 500, type = "bootstrap")
+```
+
+```{r generate-point-check}
+gradethis::grade_code(correct = paste0(gradethis::random_praise(),
+    " A smaller `reps` argument usually means that the code will run much",
+    " faster, but also that the resulting reference distribution (and ",
+    " inferences made from it) will be less accurate."))
+```
+
+##
+
+### generate() with Two Variables
+
+To generate a null distribution for the independence of two variables, imagine randomly reshuffling the pairings of explanatory and response variables to break any existing association. Modify the following code to generate **500** replicates using the "permute" generation type that can be used to create a reference distribution under the assumption that political party affiliation (`partyid`) is not affected by age (`age`):
+
+
+```{r generate-permute, exercise = TRUE, warning = FALSE, message = FALSE}
+gss %>%
+  specify(partyid ~ age) %>%
+  hypothesize(null = "independence")
+```
+
+```{r generate-permute-hint-1}
+# Pipe the given code into a `generate()` call!
+```
+
+```{r generate-permute-hint-2, eval = FALSE}
+# Type: 
+gss %>%
+  specify(partyid ~ age) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500, type = "permute")
+# and then click the Submit Answer button.
+```
+
+```{r generate-permute-solution}
+gss %>%
+  specify(partyid ~ age) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 500, type = "permute")
+```
+
+```{r generate-permute-check}
+gradethis::grade_code(correct = paste0(gradethis::random_praise(),
+    " That's it for generate()."))
 ```
