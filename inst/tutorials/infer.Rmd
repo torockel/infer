@@ -15,6 +15,7 @@ library(tidyverse)
 devtools::load_all()
 tutorial_options(exercise.timelimit = 60,
                  exercise.checker = gradethis::grade_learnr)
+knitr::opts_chunk$set(rows.print=5)
 ```
 
 ## Welcome
@@ -510,8 +511,293 @@ gss %>%
 
 ```{r calculate-stat-check}
 gradethis::grade_code(correct = paste0(gradethis::random_praise(),
-    "That's it for the 4 main verbs."))
+    "That's it for the 4 main verbs!"))
+```
+
+## Utilities
+
+`infer` also offers several utilities to extract the meaning out of summary statistics and null distributions---the package provides functions to visualize where a statistic is relative to a distribution (with `visualize()`), calculate p-values (with `get_p_value()`), and calculate confidence intervals (with `get_confidence_interval()`).
+
+## 
+
+### Setup
+
+<br>
+
+<br>
+
+To illustrate the usage of these different functions, we'll go back to the example of determining whether the true mean number of hours worked per week is 40 hours.
+
+```{r utilities-examples, warning = FALSE, message = FALSE}
+# find the point estimate
+point_estimate <- gss %>%
+  specify(response = hours) %>%
+  calculate(stat = "mean")
+
+point_estimate
+
+# generate a null distribution
+null_dist <- gss %>%
+  specify(response = hours) %>%
+  hypothesize(null = "point", mu = 40) %>%
+  generate(reps = 10000, type = "bootstrap") %>%
+  calculate(stat = "mean")
+```
+
+Our point estimate `r point_estimate` seems *pretty* close to 40, but a little bit different. We might wonder if this difference is just due to random chance, or if the mean number of hours worked per week in the population really isn't 40.
+
+##
+
+### Visualizing
+
+
+We could initially just visualize the null distribution.
+
+```{r visualize-ex, warning = FALSE, message = FALSE}
+null_dist %>%
+  visualize()
+```
+
+Where does our sample's observed statistic lie on this distribution? We can use the `obs_stat` argument to specify this.
+
+```{r visualize2, warning = FALSE, message = FALSE}
+null_dist %>%
+  visualize() +
+  shade_p_value(obs_stat = point_estimate, direction = "two_sided")
+```
+
+Notice that `infer` has also shaded the regions of the null distribution that are as (or more) extreme than our observed statistic. (Also, note that we now use the `+` operator to apply the `shade_p_value` function. This is because `visualize` outputs a plot object from `ggplot2` instead of a data frame, and the `+` operator is needed to add the p-value layer to the plot object.) 
+
+##
+
+### p-Values and Confidence Intervals
+
+<br>
+
+The red bar from that last visualization looks like it's pretty far out on the right tail of the null distribution, so observing a sample mean of `r point_estimate` hours would be pretty unlikely if the mean was actually 40 hours. How unlikely, though?
+
+```{r get_p_value, warning = FALSE, message = FALSE}
+# get a two-tailed p-value
+p_value <- null_dist %>%
+  get_p_value(obs_stat = point_estimate, direction = "two_sided")
+
+p_value
+```
+
+It looks like the p-value is `r p_value`, which is pretty small---if the true mean number of hours worked per week was actually 40, the probability of our sample mean being this far (`r abs(point_estimate-40)` hours) from 40 would be `r p_value`. This may or may not be statistically significantly different, depending on the significance level $\alpha$ you decided on *before* you ran this analysis. If you had set $\alpha = .05$, then this difference would be statistically significant, but if you had set $\alpha = .01$, then it would not be.
+
+To get a confidence interval around our estimate, we can write:
+
+```{r get_conf, message = FALSE, warning = FALSE}
+# start with the null distribution
+null_dist %>%
+  # calculate the confidence interval around the point estimate
+  get_confidence_interval(point_estimate = point_estimate,
+                          # at the 95% confidence level
+                          level = .95,
+                          # using the standard error
+                          type = "se")
+```
+
+As you can see, 40 hours per week is not contained in this interval, which aligns with our previous conclusion that this finding is significant at the confidence level $\alpha = .05$.
+
+##
+
+### Exercise
+
+The following code calculates an observed $t$ statistic for the distribution 
+
+```{r, warning = FALSE, message = FALSE}
+observed_statistic <- gss %>%
+  specify(hours ~ college) %>%
+  calculate(stat = "diff in means", order = c("degree", "no degree"))
+
+null_dist <- gss %>%
+  specify(hours ~ college) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("degree", "no degree"))
+```
+
+You have access to the `observed_statistic` and `null_dist` objects. Modify the following code to visualize where the observed statistic lies on the null distribution (with `direction` set to `"two-sided"`.)
+
+```{r visualize, exercise = TRUE, warning = FALSE, message = FALSE}
+null_dist %>%
+  visualize()
+```
+
+```{r visualize-hint-1}
+# Pipe the given code into a `shade_p_value()` call!
+```
+
+```{r visualize-hint-2, eval = FALSE}
+# Type: 
+null_dist %>%
+  visualize() %>%
+  shade_p_value(obs_stat = observed_statistic, direction = "two_sided")
+# and then click the Submit Answer button.
+```
+
+```{r visualize-solution}
+null_dist %>%
+  visualize() %>%
+  shade_p_value(obs_stat = observed_statistic, direction = "two_sided")
+```
+
+```{r visualize-check}
+gradethis::grade_code(correct = paste0(gradethis::random_praise()))
+```
+
+## Challenge Problems
+
+### Calculating an Observed Difference
+
+Let's try to put together everything we've learned so far.
+
+To start off, use `gss` and functions from `infer` to find the observed difference in mean age (`age`) by college degree status (`college`), subtracted in the order `degree - no degree`.
+
+```{r ch1, exercise = TRUE, warning = FALSE, message = FALSE}
+
+```
+
+```{r ch1-hint-1}
+# Use the specify() and calculate() functions!
+```
+
+```{r ch1-hint-2, eval = FALSE}
+# Here's the first two lines:
+gss %>%
+  specify(age ~ college)
+# See if you can write the last one!
+```
+
+```{r ch1-hint-3, eval = FALSE}
+# Type: 
+gss %>%
+  specify(age ~ college) %>%
+  calculate(stat = "diff in means", order = c("degree", "no degree"))
+# and then click the Submit Answer button.
+```
+
+```{r ch1-check}
+gradethis::grade_result(
+  gradethis::pass_if(~ identical(.result, gss %>%
+    specify(age ~ college) %>%
+    calculate(stat = "diff in means", order = c("degree", "no degree"))),
+                     gradethis::random_praise()))
+```
+
+##
+
+### Generate a Null Distribution
+
+```{r ch-setup, include = FALSE}
+observed_diff <- gss %>%
+  specify(age ~ college) %>%
+  calculate(stat = "diff in means", order = c("degree", "no degree"))
+
+null_dist <- gss %>%
+  specify(age ~ college) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("degree", "no degree"))
+```
+
+You have access to the observed difference you calculated in the last problem, stored as `observed_diff`. Now, use `gss` and functions from `infer` to find a null distribution for the difference in mean age (`age`) by college degree status (`college`), again subtracting in the order `degree - no degree`, using 1000 permutation samples. Use the formula (`y ~ x`) notation in your call to `specify()`.
+
+
+```{r ch-null, exercise = TRUE, warning = FALSE, message = FALSE}
+
+```
+
+```{r ch-null-hint-1}
+# Use all of the 4 main verbs!
+```
+
+```{r ch-null-hint-2, eval = FALSE}
+# Here's the first two lines:
+gss %>%
+  specify(age ~ college)
+# See if you can write the next three!
+```
+
+```{r ch-null-hint-3, eval = FALSE}
+# Here's the first three lines:
+gss %>%
+  specify(age ~ college) %>%
+  hypothesize(null = "independence")
+# See if you can write the last two!
+```
+
+```{r ch-null-hint-4, eval = FALSE}
+# Type: 
+gss %>%
+  specify(age ~ college) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("degree", "no degree"))
+# and then click the Submit Answer button.
+```
+
+```{r ch-null-solution, warning = FALSE, message = FALSE}
+gss %>%
+  specify(age ~ college) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("degree", "no degree"))
+```
+
+```{r ch-null-check}
+gradethis::grade_code(correct = paste0(gradethis::random_praise()))
 ```
 
 
+##
+
+### Generate a Null Distribution
+
+You have access to the observed difference and null distribution you calculated in the last problems, stored as `observed_diff` and `null_dist`. Now, use `gss` and functions from `infer` to visualize where the observed statistic lies on the null distribution (with `direction` set to `"two-sided"`.)
+
+
+```{r ch-viz, exercise = TRUE, warning = FALSE, message = FALSE}
+
+```
+
+```{r ch-viz-hint-1}
+# Use visualize() and shade_p_value!
+```
+
+```{r ch-viz-hint-2, eval = FALSE}
+# Have you made sure to add the shade_p_value() layer with
+# `+` rather than piping the visualize() layer with `%>%`?
+```
+
+```{r ch-viz-hint-3, eval = FALSE}
+# Here's the first two lines
+null_dist %>%
+  visualize()
+# See if you can write the last one!
+```
+
+```{r ch-viz-hint-4, eval = FALSE}
+# Type: 
+null_dist %>%
+  visualize() +
+  shade_p_value(obs_stat = observed_diff, direction = "two_sided")
+# and then click the Submit Answer button.
+```
+
+```{r ch-viz-solution, warning = FALSE, message = FALSE}
+null_dist %>%
+  visualize() +
+  shade_p_value(obs_stat = observed_diff, direction = "two_sided")
+```
+
+```{r ch-viz-check}
+gradethis::grade_code(correct = paste0(gradethis::random_praise(),
+    " That's it! You've got `infer` down. Congrats on making it all of the",
+    " way through this tutorial! Many of the examples provided",
+    " in this tutorial are included in the main `infer` vignette,",
+    " accessible by calling vignette(\"infer\") in your console."))
+```
 
