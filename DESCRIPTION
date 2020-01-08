@@ -20,6 +20,8 @@ Description: The objective of this package is to perform inference using an expr
 License: CC0
 Encoding: UTF-8
 LazyData: true
+Additional_repositories: 
+    https://github.com/rstudio-education/gradethis/tree/d818814
 Imports:
     dplyr (>= 0.7.0),
     methods,
@@ -31,8 +33,7 @@ Imports:
     grDevices,
     purrr,
     lifecycle,
-    learnr,
-    gradethis
+    learnr
 Depends:
     R (>= 3.1.2)
 Suggests: 
