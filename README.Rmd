@@ -24,7 +24,7 @@ The objective of this package is to perform statistical inference using an expre
 + `generate()` allows you to generate data reflecting the null hypothesis.
 + `calculate()` allows you to calculate a distribution of statistics from the generated data to form the null distribution.
 
-To learn more about the principles underlying the package design, see `vignette("infer")`.
+To learn more about the principles underlying the package design, see `vignette("infer")`. This vignette is also available as an interactive `learnr` lesson available by running `learnr::run_tutorial("infer", package = "infer")`.
 
 ```{r load-package, echo = FALSE, message = FALSE, warning = FALSE}
 library(devtools)
@@ -120,4 +120,4 @@ null_distn %>%
 
 Note that the formula and non-formula interfaces  (i.e. `age ~ partyid` vs. `response = age, explanatory =  partyid`) work for all implemented inference procedures in `infer`. Use whatever is more natural for you. If you will be doing modeling using functions like `lm()` and `glm()`, though, we recommend you begin to use the formula `y ~ x` notation as soon as possible.
 
-Other resources are available in the package vignettes! See `vignette("observed_stat_examples")` for more examples like the one above, and `vignette("infer")` for discussion of the underlying principles of the package design.
+Other resources are available in the package vignettes! See `vignette("observed_stat_examples")` for more examples like the one above, and `vignette("infer")` for discussion of the underlying principles of the package design. The `"infer"` vignette is also available as an interactive `learnr` lesson available by running `learnr::run_tutorial("infer", package = "infer")`.

@@ -33,8 +33,10 @@ their outputs.
   - `calculate()` allows you to calculate a distribution of statistics
     from the generated data to form the null distribution.
 
-To learn more about the principles underlying the package design, see
-`vignette("infer")`.
+To learn more about the principles underlying the package design, see 
+`vignette("infer")`. This vignette is also available as an interactive 
+`learnr` lesson available by running 
+`learnr::run_tutorial("infer", package = "infer")`.
 
 ![](https://raw.githubusercontent.com/tidymodels/infer/master/figs/ht-diagram.png)<!-- -->
 
@@ -169,4 +171,6 @@ soon as possible.
 Other resources are available in the package vignettes\! See
 `vignette("observed_stat_examples")` for more examples like the one
 above, and `vignette("infer")` for discussion of the underlying
-principles of the package design.
+principles of the package design. The `"infer"` vignette is also 
+available as an interactive `learnr` lesson available by running 
+`learnr::run_tutorial("infer", package = "infer")`.
