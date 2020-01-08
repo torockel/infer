@@ -22,6 +22,7 @@ knitr::opts_chunk$set(rows.print=5)
 
 In this tutorial, you will learn how to use the `infer` R package to conduct hypothesis tests on tidy data. Rather than providing methods for specific statistical tests, this package consolidates the principles that are shared among common hypothesis tests into a set of 4 main verbs (functions), supplemented with many utilities to visualize and extract value from their outputs.
 
+This tutorial assumes some background with hypothesis testing and base R. To read about the intuition behind hypothesis testing and the design of this package, see the *Introduction* section of `vignette("infer")`.
 
 ### The `gss` Dataset
 
@@ -59,7 +60,7 @@ The workflow of this package is designed around four main verbs. Starting out wi
 + `calculate()` allows you to calculate a distribution of statistics from the generated data to form the null distribution.
 
 
-## specify()
+## Specify
 
 The `specify` function can be used to specify which of the variable(s) in the dataset you're interested in. If you're only interested in, say, the `age` of the respondents, you might write:
 
@@ -77,8 +78,6 @@ gss %>%
 ```
 
 We can see that the `infer` class has been appended on top of the dataframe classes--this new class stores some extra metadata.
-
-## 
 
 ### Exercise
 
@@ -107,7 +106,6 @@ gss %>% specify(response = hours)
 gradethis::grade_code(paste0(gradethis::random_praise()))
 ```
 
-##
 
 ### specify() Two Variables
 
@@ -147,8 +145,6 @@ gradethis::grade_result(
           gradethis::random_praise()))
 ```
 
-## 
-
 ### specify() With Proportions
 
 If you're doing inference on one proportion or a difference in proportions, you will need to use the `success` argument to specify which level of your `response` variable is a success. For instance, if you're interested in the proportion of the population with a college degree, you might use the following code:
@@ -159,7 +155,7 @@ gss %>%
   specify(response = college, success = "degree")
 ```
 
-## hypothesize()
+## Hypothesize
 
 The next step in the `infer` pipeline is often to declare a null hypothesis using `hypothesize()`. The first step is to supply one of `"independence"` or `"point"` to the `null` argument. If your null hypothesis assumes independence between two variables, then this is all you need to supply to `hypothesize()`:
 
@@ -170,8 +166,6 @@ gss %>%
 ```
 
 Again, if we ran this code,  the dataframe outputted from `hypothesize()` would look almost exactly the same as it did when it came out of `specify()`, but `infer` now "knows" your null hypothesis.
-
-##
 
 ### Exercise
 
@@ -203,9 +197,6 @@ gradethis::grade_result(
                           hypothesize("independence")),
           gradethis::random_praise()))
 ```
-
-
-##
 
 ### Inference with Point Estimates
 
@@ -246,7 +237,7 @@ gradethis::grade_result(
 ```
 
 
-## generate()
+## Generate
 
 Once we've asserted our null hypothesis using `hypothesize()`, we can construct a reference distribution based on this hypothesis. We can do this using one of several methods, supplied in the `type` argument:
 
@@ -263,7 +254,7 @@ gss %>%
   generate(reps = 1000, type = "bootstrap")
 ```
 
-In the above example, we take 1000 bootstrap samples to form our reference distribution for the true mean number of hours worked per week. Modify the code below to generate a reference distribution for the true **median** number of hours worked per week from 500 repetitions drawn using the `bootstrap` generation type.
+In the above example, we take 1000 bootstrap samples to form our reference distribution for the true mean number of hours worked per week. Modify the code below to generate a reference distribution for the true **median** number of hours worked per week from **500** repetitions drawn using the `bootstrap` generation type.
 
 ```{r generate-point, exercise = TRUE, warning = FALSE, message = FALSE}
 gss %>%
@@ -299,11 +290,9 @@ gradethis::grade_code(correct = paste0(gradethis::random_praise(),
     " inferences made from it) will be less accurate."))
 ```
 
-##
-
 ### generate() with Two Variables
 
-To generate a null distribution for the independence of two variables, imagine randomly reshuffling the pairings of explanatory and response variables to break any existing association. Modify the following code to generate **500** replicates using the "permute" generation type that can be used to create a reference distribution under the assumption that political party affiliation (`partyid`) is not affected by age (`age`):
+To generate a null distribution for the independence of two variables, imagine randomly reshuffling the pairings of explanatory and response variables to break any existing association. Extend the following code to generate **500** replicates using the "permute" generation type that can be used to create a reference distribution under the assumption that political party affiliation (`partyid`) is not affected by age (`age`):
 
 
 ```{r generate-permute, exercise = TRUE, warning = FALSE, message = FALSE}
@@ -337,7 +326,7 @@ gradethis::grade_code(correct = paste0(gradethis::random_praise(),
     " That's it for generate()."))
 ```
 
-## calculate()
+## Calculate
 
 Depending on whether you're carrying out computation-based inference or theory-based inference, you will either supply `calculate()` with the output of `generate()` or `hypothesize`, respectively. The function also takes in a `stat` argument, which is currently one of "mean", "median", "sum", "sd", "prop", "count", "diff in means", "diff in medians", "diff in props", "Chisq", "F", "t", "z", "slope", or "correlation". For example, continuing our example above to calculate the null distribution of mean hours worked per week:
 
@@ -349,23 +338,9 @@ gss %>%
   calculate(stat = "mean")
 ```
 
-The output of `calculate()` here shows us the sample statistic (in this case, the mean) for each of our 1000 replicates. If you're carrying out inference on differences in means, medians, or proportions, or t and z statistics, you will need to supply an `order` argument, giving the order in which the explanatory variables should be subtracted. For instance, to find the difference in mean age of those that have a college degree and those that don't, we might write:
-
-```{r specify-diff-in-means, warning = FALSE, message = FALSE}
-gss %>%
-  specify(age ~ college) %>%
-  hypothesize(null = "independence") %>%
-  generate(reps = 1000, type = "permute") %>%
-  calculate("diff in means", order = c("degree", "no degree"))
-```
-
-##
+The output of `calculate()` here shows us the sample statistic (in this case, the mean) for each of our 1000 replicates. 
 
 ### Exercise
-
-<br>
-
-<br>
 
 Let's give `calculate()` a try. Add to the following code to `calculate` the median of each bootstrap sample for the number of hours of worked per week.
 
@@ -401,16 +376,21 @@ gss %>%
 
 ```{r calculate1-check}
 gradethis::grade_code(correct = paste0(gradethis::random_praise(),
-    "Now let's try working with two variables."))
+    " Now let's try working with two variables."))
 ```
 
-##
+If you're carrying out inference on differences in means, medians, or proportions, or t and z statistics, you will need to supply an `order` argument, giving the order in which the explanatory variables should be subtracted. For instance, to find the difference in mean age of those that have a college degree and those that don't, we might write:
+
+```{r specify-diff-in-means, warning = FALSE, message = FALSE}
+gss %>%
+  specify(age ~ college) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate("diff in means", order = c("degree", "no degree"))
+```
+
 
 ### Exercise
-
-<br>
-
-<br>
 
 Let's try using `calculate` with two variables. Add to the following code to `calculate` the difference in mean number of hours worked (`hours`) depending on whether one has a college degree or not (`college`)--subtract in the order `degree - no degree`.
 
@@ -460,8 +440,6 @@ gss %>%
 ```{r calculate2-check}
 gradethis::grade_code(correct = paste0(gradethis::random_praise()))
 ```
-
-##
 
 ### calculate()ing Observed Statistics
 
@@ -514,17 +492,11 @@ gradethis::grade_code(correct = paste0(gradethis::random_praise(),
     "That's it for the 4 main verbs!"))
 ```
 
-## Utilities
+## Other Utilities
 
 `infer` also offers several utilities to extract the meaning out of summary statistics and null distributions---the package provides functions to visualize where a statistic is relative to a distribution (with `visualize()`), calculate p-values (with `get_p_value()`), and calculate confidence intervals (with `get_confidence_interval()`).
 
-## 
-
 ### Setup
-
-<br>
-
-<br>
 
 To illustrate the usage of these different functions, we'll go back to the example of determining whether the true mean number of hours worked per week is 40 hours.
 
@@ -546,8 +518,6 @@ null_dist <- gss %>%
 
 Our point estimate `r point_estimate` seems *pretty* close to 40, but a little bit different. We might wonder if this difference is just due to random chance, or if the mean number of hours worked per week in the population really isn't 40.
 
-##
-
 ### Visualizing
 
 
@@ -568,11 +538,7 @@ null_dist %>%
 
 Notice that `infer` has also shaded the regions of the null distribution that are as (or more) extreme than our observed statistic. (Also, note that we now use the `+` operator to apply the `shade_p_value` function. This is because `visualize` outputs a plot object from `ggplot2` instead of a data frame, and the `+` operator is needed to add the p-value layer to the plot object.) 
 
-##
-
 ### p-Values and Confidence Intervals
-
-<br>
 
 The red bar from that last visualization looks like it's pretty far out on the right tail of the null distribution, so observing a sample mean of `r point_estimate` hours would be pretty unlikely if the mean was actually 40 hours. How unlikely, though?
 
@@ -600,8 +566,6 @@ null_dist %>%
 ```
 
 As you can see, 40 hours per week is not contained in this interval, which aligns with our previous conclusion that this finding is significant at the confidence level $\alpha = .05$.
-
-##
 
 ### Exercise
 
@@ -687,8 +651,6 @@ gradethis::grade_result(
                      gradethis::random_praise()))
 ```
 
-##
-
 ### Generate a Null Distribution
 
 ```{r ch-setup, include = FALSE}
@@ -750,9 +712,6 @@ gss %>%
 ```{r ch-null-check}
 gradethis::grade_code(correct = paste0(gradethis::random_praise()))
 ```
-
-
-##
 
 ### Generate a Null Distribution
 

@@ -119,6 +119,7 @@ $(document).ready(function () {
 <div id="section-welcome" class="section level2">
 <h2>Welcome</h2>
 <p>In this tutorial, you will learn how to use the <code>infer</code> R package to conduct hypothesis tests on tidy data. Rather than providing methods for specific statistical tests, this package consolidates the principles that are shared among common hypothesis tests into a set of 4 main verbs (functions), supplemented with many utilities to visualize and extract value from their outputs.</p>
+<p>This tutorial assumes some background with hypothesis testing and base R. To read about the intuition behind hypothesis testing and the design of this package, see the <em>Introduction</em> section of <code>vignette(&quot;infer&quot;)</code>.</p>
 <div id="section-the-gss-dataset" class="section level3">
 <h3>The <code>gss</code> Dataset</h3>
 <p>Throughout this tutorial, we’ll make use of the <code>gss</code> dataset supplied by <code>infer</code>, containing a sample of 3000 observations of 11 variables from the <em>General Social Survey</em>. Print the <code>gss</code> dataset to check it out!</p>
@@ -152,7 +153,7 @@ $(document).ready(function () {
 </ul>
 </div>
 <div id="section-specify" class="section level2">
-<h2>specify()</h2>
+<h2>Specify</h2>
 <p>The <code>specify</code> function can be used to specify which of the variable(s) in the dataset you’re interested in. If you’re only interested in, say, the <code>age</code> of the respondents, you might write:</p>
 <pre class="r"><code>gss %&gt;%
   specify(response = age)</code></pre>
@@ -177,9 +178,6 @@ $(document).ready(function () {
   class()</code></pre>
 <pre><code>## [1] &quot;infer&quot;      &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
 <p>We can see that the <code>infer</code> class has been appended on top of the dataframe classes–this new class stores some extra metadata.</p>
-</div>
-<div id="section-section" class="section level2">
-<h2></h2>
 <div id="section-exercise" class="section level3">
 <h3>Exercise</h3>
 <p>Let’s try this out. Use <code>specify()</code> to specify interest in the <code>hours</code> variable from the <code>gss</code> dataset.</p>
@@ -201,9 +199,6 @@ $(document).ready(function () {
 <pre class="text"><code>gradethis::grade_code(paste0(gradethis::random_praise()))</code></pre>
 </div>
 </div>
-</div>
-<div id="section-section-1" class="section level2">
-<h2></h2>
 <div id="section-specify-two-variables" class="section level3">
 <h3>specify() Two Variables</h3>
 <p>If you’re interested in two variables–<code>age</code> and <code>partyid</code>, for example–you can <code>specify</code> their relationship in one of two (equivalent) ways:</p>
@@ -234,9 +229,6 @@ gss %&gt;%
           gradethis::random_praise()))</code></pre>
 </div>
 </div>
-</div>
-<div id="section-section-2" class="section level2">
-<h2></h2>
 <div id="section-specify-with-proportions" class="section level3">
 <h3>specify() With Proportions</h3>
 <p>If you’re doing inference on one proportion or a difference in proportions, you will need to use the <code>success</code> argument to specify which level of your <code>response</code> variable is a success. For instance, if you’re interested in the proportion of the population with a college degree, you might use the following code:</p>
@@ -246,15 +238,12 @@ gss %&gt;%
 </div>
 </div>
 <div id="section-hypothesize" class="section level2">
-<h2>hypothesize()</h2>
+<h2>Hypothesize</h2>
 <p>The next step in the <code>infer</code> pipeline is often to declare a null hypothesis using <code>hypothesize()</code>. The first step is to supply one of <code>&quot;independence&quot;</code> or <code>&quot;point&quot;</code> to the <code>null</code> argument. If your null hypothesis assumes independence between two variables, then this is all you need to supply to <code>hypothesize()</code>:</p>
 <pre class="r"><code>gss %&gt;%
   specify(age ~ partyid) %&gt;%
   hypothesize(null = &quot;independence&quot;)</code></pre>
 <p>Again, if we ran this code, the dataframe outputted from <code>hypothesize()</code> would look almost exactly the same as it did when it came out of <code>specify()</code>, but <code>infer</code> now “knows” your null hypothesis.</p>
-</div>
-<div id="section-section-3" class="section level2">
-<h2></h2>
 <div id="section-exercise-1" class="section level3">
 <h3>Exercise</h3>
 <p>Starting off from the code we used to <code>specify()</code> the <code>hours</code> and <code>college</code>, <code>hypothesize()</code> that these two variables are independent of each other.</p>
@@ -283,9 +272,6 @@ gss %&gt;%
           gradethis::random_praise()))</code></pre>
 </div>
 </div>
-</div>
-<div id="section-section-4" class="section level2">
-<h2></h2>
 <div id="section-inference-with-point-estimates" class="section level3">
 <h3>Inference with Point Estimates</h3>
 <p>If you’re doing inference on a point estimate, you will also need to provide one of <code>p</code> (the true proportion of successes, between 0 and 1), <code>mu</code> (the true mean), <code>med</code> (the true median), or <code>sigma</code> (the true standard deviation). For instance, if the null hypothesis is that the mean number of hours Americans work per week is 40, we would write:</p>
@@ -319,7 +305,7 @@ gss %&gt;%
 </div>
 </div>
 <div id="section-generate" class="section level2">
-<h2>generate()</h2>
+<h2>Generate</h2>
 <p>Once we’ve asserted our null hypothesis using <code>hypothesize()</code>, we can construct a reference distribution based on this hypothesis. We can do this using one of several methods, supplied in the <code>type</code> argument:</p>
 <ul>
 <li><code>bootstrap</code>: A bootstrap sample will be drawn for each replicate, where a sample of size equal to the input sample size is drawn (with replacement) from the input sample data.<br />
@@ -333,7 +319,7 @@ gss %&gt;%
   specify(response = hours) %&gt;%
   hypothesize(null = &quot;point&quot;, mu = 40) %&gt;%
   generate(reps = 1000, type = &quot;bootstrap&quot;)</code></pre>
-<p>In the above example, we take 1000 bootstrap samples to form our reference distribution for the true mean number of hours worked per week. Modify the code below to generate a reference distribution for the true <strong>median</strong> number of hours worked per week from 500 repetitions drawn using the <code>bootstrap</code> generation type.</p>
+<p>In the above example, we take 1000 bootstrap samples to form our reference distribution for the true mean number of hours worked per week. Modify the code below to generate a reference distribution for the true <strong>median</strong> number of hours worked per week from <strong>500</strong> repetitions drawn using the <code>bootstrap</code> generation type.</p>
 <div class="tutorial-exercise" data-label="generate-point" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>gss %&gt;%
   specify(response = hours) %&gt;%
@@ -364,12 +350,9 @@ gss %&gt;%
     &quot; faster, but also that the resulting reference distribution (and &quot;,
     &quot; inferences made from it) will be less accurate.&quot;))</code></pre>
 </div>
-</div>
-<div id="section-section-5" class="section level2">
-<h2></h2>
 <div id="section-generate-with-two-variables" class="section level3">
 <h3>generate() with Two Variables</h3>
-<p>To generate a null distribution for the independence of two variables, imagine randomly reshuffling the pairings of explanatory and response variables to break any existing association. Modify the following code to generate <strong>500</strong> replicates using the “permute” generation type that can be used to create a reference distribution under the assumption that political party affiliation (<code>partyid</code>) is not affected by age (<code>age</code>):</p>
+<p>To generate a null distribution for the independence of two variables, imagine randomly reshuffling the pairings of explanatory and response variables to break any existing association. Extend the following code to generate <strong>500</strong> replicates using the “permute” generation type that can be used to create a reference distribution under the assumption that political party affiliation (<code>partyid</code>) is not affected by age (<code>age</code>):</p>
 <div class="tutorial-exercise" data-label="generate-permute" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>gss %&gt;%
   specify(partyid ~ age) %&gt;%
@@ -400,7 +383,7 @@ gss %&gt;%
 </div>
 </div>
 <div id="section-calculate" class="section level2">
-<h2>calculate()</h2>
+<h2>Calculate</h2>
 <p>Depending on whether you’re carrying out computation-based inference or theory-based inference, you will either supply <code>calculate()</code> with the output of <code>generate()</code> or <code>hypothesize</code>, respectively. The function also takes in a <code>stat</code> argument, which is currently one of “mean”, “median”, “sum”, “sd”, “prop”, “count”, “diff in means”, “diff in medians”, “diff in props”, “Chisq”, “F”, “t”, “z”, “slope”, or “correlation”. For example, continuing our example above to calculate the null distribution of mean hours worked per week:</p>
 <pre class="r"><code>gss %&gt;%
   specify(response = hours) %&gt;%
@@ -421,33 +404,9 @@ gss %&gt;%
 ##  9         9  40.0
 ## 10        10  40.4
 ## # … with 990 more rows</code></pre>
-<p>The output of <code>calculate()</code> here shows us the sample statistic (in this case, the mean) for each of our 1000 replicates. If you’re carrying out inference on differences in means, medians, or proportions, or t and z statistics, you will need to supply an <code>order</code> argument, giving the order in which the explanatory variables should be subtracted. For instance, to find the difference in mean age of those that have a college degree and those that don’t, we might write:</p>
-<pre class="r"><code>gss %&gt;%
-  specify(age ~ college) %&gt;%
-  hypothesize(null = &quot;independence&quot;) %&gt;%
-  generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
-  calculate(&quot;diff in means&quot;, order = c(&quot;degree&quot;, &quot;no degree&quot;))</code></pre>
-<pre><code>## # A tibble: 1,000 x 2
-##    replicate   stat
-##        &lt;int&gt;  &lt;dbl&gt;
-##  1         1 -0.632
-##  2         2  0.664
-##  3         3 -1.46 
-##  4         4  0.540
-##  5         5  1.16 
-##  6         6  0.272
-##  7         7  0.695
-##  8         8 -1.15 
-##  9         9 -0.659
-## 10        10  0.870
-## # … with 990 more rows</code></pre>
-</div>
-<div id="section-section-6" class="section level2">
-<h2></h2>
+<p>The output of <code>calculate()</code> here shows us the sample statistic (in this case, the mean) for each of our 1000 replicates.</p>
 <div id="section-exercise-2" class="section level3">
 <h3>Exercise</h3>
-<p><br></p>
-<p><br></p>
 <p>Let’s give <code>calculate()</code> a try. Add to the following code to <code>calculate</code> the median of each bootstrap sample for the number of hours of worked per week.</p>
 <div class="tutorial-exercise" data-label="calculate1" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>gss %&gt;%
@@ -477,16 +436,31 @@ gss %&gt;%
 </div>
 <div class="tutorial-exercise-support" data-label="calculate1-check" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>gradethis::grade_code(correct = paste0(gradethis::random_praise(),
-    &quot;Now let&#39;s try working with two variables.&quot;))</code></pre>
+    &quot; Now let&#39;s try working with two variables.&quot;))</code></pre>
 </div>
+<p>If you’re carrying out inference on differences in means, medians, or proportions, or t and z statistics, you will need to supply an <code>order</code> argument, giving the order in which the explanatory variables should be subtracted. For instance, to find the difference in mean age of those that have a college degree and those that don’t, we might write:</p>
+<pre class="r"><code>gss %&gt;%
+  specify(age ~ college) %&gt;%
+  hypothesize(null = &quot;independence&quot;) %&gt;%
+  generate(reps = 1000, type = &quot;permute&quot;) %&gt;%
+  calculate(&quot;diff in means&quot;, order = c(&quot;degree&quot;, &quot;no degree&quot;))</code></pre>
+<pre><code>## # A tibble: 1,000 x 2
+##    replicate   stat
+##        &lt;int&gt;  &lt;dbl&gt;
+##  1         1 -0.632
+##  2         2  0.664
+##  3         3 -1.46 
+##  4         4  0.540
+##  5         5  1.16 
+##  6         6  0.272
+##  7         7  0.695
+##  8         8 -1.15 
+##  9         9 -0.659
+## 10        10  0.870
+## # … with 990 more rows</code></pre>
 </div>
-</div>
-<div id="section-section-7" class="section level2">
-<h2></h2>
 <div id="section-exercise-3" class="section level3">
 <h3>Exercise</h3>
-<p><br></p>
-<p><br></p>
 <p>Let’s try using <code>calculate</code> with two variables. Add to the following code to <code>calculate</code> the difference in mean number of hours worked (<code>hours</code>) depending on whether one has a college degree or not (<code>college</code>)–subtract in the order <code>degree - no degree</code>.</p>
 <div class="tutorial-exercise" data-label="calculate2" data-caption="Code" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="0">
 <pre class="text"><code>gss %&gt;%
@@ -528,9 +502,6 @@ gss %&gt;%
 <pre class="text"><code>gradethis::grade_code(correct = paste0(gradethis::random_praise()))</code></pre>
 </div>
 </div>
-</div>
-<div id="section-section-8" class="section level2">
-<h2></h2>
 <div id="section-calculateing-observed-statistics" class="section level3">
 <h3>calculate()ing Observed Statistics</h3>
 <p>You can also use <code>calculate()</code> to calculate observed statistics from your data. For example, to calculate the mean number of hours worked per week by respondents in our data, we might write:</p>
@@ -578,16 +549,11 @@ gss %&gt;%
 </div>
 </div>
 </div>
-<div id="section-utilities" class="section level2">
-<h2>Utilities</h2>
+<div id="section-other-utilities" class="section level2">
+<h2>Other Utilities</h2>
 <p><code>infer</code> also offers several utilities to extract the meaning out of summary statistics and null distributions—the package provides functions to visualize where a statistic is relative to a distribution (with <code>visualize()</code>), calculate p-values (with <code>get_p_value()</code>), and calculate confidence intervals (with <code>get_confidence_interval()</code>).</p>
-</div>
-<div id="section-section-9" class="section level2">
-<h2></h2>
 <div id="section-setup" class="section level3">
 <h3>Setup</h3>
-<p><br></p>
-<p><br></p>
 <p>To illustrate the usage of these different functions, we’ll go back to the example of determining whether the true mean number of hours worked per week is 40 hours.</p>
 <pre class="r"><code># find the point estimate
 point_estimate &lt;- gss %&gt;%
@@ -607,9 +573,6 @@ null_dist &lt;- gss %&gt;%
   calculate(stat = &quot;mean&quot;)</code></pre>
 <p>Our point estimate 40.7722096 seems <em>pretty</em> close to 40, but a little bit different. We might wonder if this difference is just due to random chance, or if the mean number of hours worked per week in the population really isn’t 40.</p>
 </div>
-</div>
-<div id="section-section-10" class="section level2">
-<h2></h2>
 <div id="section-visualizing" class="section level3">
 <h3>Visualizing</h3>
 <p>We could initially just visualize the null distribution.</p>
@@ -623,12 +586,8 @@ null_dist &lt;- gss %&gt;%
 <p><img src="infer_files/figure-html/visualize2-1.png" width="624" /></p>
 <p>Notice that <code>infer</code> has also shaded the regions of the null distribution that are as (or more) extreme than our observed statistic. (Also, note that we now use the <code>+</code> operator to apply the <code>shade_p_value</code> function. This is because <code>visualize</code> outputs a plot object from <code>ggplot2</code> instead of a data frame, and the <code>+</code> operator is needed to add the p-value layer to the plot object.)</p>
 </div>
-</div>
-<div id="section-section-11" class="section level2">
-<h2></h2>
 <div id="section-p-values-and-confidence-intervals" class="section level3">
 <h3>p-Values and Confidence Intervals</h3>
-<p><br></p>
 <p>The red bar from that last visualization looks like it’s pretty far out on the right tail of the null distribution, so observing a sample mean of 40.7722096 hours would be pretty unlikely if the mean was actually 40 hours. How unlikely, though?</p>
 <pre class="r"><code># get a two-tailed p-value
 p_value &lt;- null_dist %&gt;%
@@ -655,9 +614,6 @@ null_dist %&gt;%
 ## 1  40.1  41.4</code></pre>
 <p>As you can see, 40 hours per week is not contained in this interval, which aligns with our previous conclusion that this finding is significant at the confidence level <span class="math inline">\(\alpha = .05\)</span>.</p>
 </div>
-</div>
-<div id="section-section-12" class="section level2">
-<h2></h2>
 <div id="section-exercise-4" class="section level3">
 <h3>Exercise</h3>
 <p>The following code calculates an observed <span class="math inline">\(t\)</span> statistic for the distribution</p>
@@ -729,9 +685,6 @@ gss %&gt;%
                      gradethis::random_praise()))</code></pre>
 </div>
 </div>
-</div>
-<div id="section-section-13" class="section level2">
-<h2></h2>
 <div id="section-generate-a-null-distribution" class="section level3">
 <h3>Generate a Null Distribution</h3>
 <p>You have access to the observed difference you calculated in the last problem, stored as <code>observed_diff</code>. Now, use <code>gss</code> and functions from <code>infer</code> to find a null distribution for the difference in mean age (<code>age</code>) by college degree status (<code>college</code>), again subtracting in the order <code>degree - no degree</code>, using 1000 permutation samples. Use the formula (<code>y ~ x</code>) notation in your call to <code>specify()</code>.</p>
@@ -774,9 +727,6 @@ gss %&gt;%
 <pre class="text"><code>gradethis::grade_code(correct = paste0(gradethis::random_praise()))</code></pre>
 </div>
 </div>
-</div>
-<div id="section-section-14" class="section level2">
-<h2></h2>
 <div id="section-generate-a-null-distribution-1" class="section level3">
 <h3>Generate a Null Distribution</h3>
 <p>You have access to the observed difference and null distribution you calculated in the last problems, stored as <code>observed_diff</code> and <code>null_dist</code>. Now, use <code>gss</code> and functions from <code>infer</code> to visualize where the observed statistic lies on the null distribution (with <code>direction</code> set to <code>&quot;two-sided&quot;</code>.)</p>
