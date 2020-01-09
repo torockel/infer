@@ -9,6 +9,19 @@ runtime: shiny_prerendered
 ---
 
 ```{r setup, include=FALSE}
+# Check if learnr and gradethis are installed  
+if (!requireNamespace("learnr", quietly = TRUE)) {
+  stop(c("The \"learnr\" package is needed for this lesson. The package ",
+         "can be installed using \"install.packages(\"learnr\")\""),
+       call. = FALSE)
+}
+if (!requireNamespace("gradethis", quietly = TRUE)) {
+  stop(c("The \"gradethis\" package is needed for this lesson. The package ",
+         "can be installed using",
+         "\"remotes::install_github(\"rstudio-education/gradethis\")\""),
+       call. = FALSE)
+}
+
 library(learnr)
 library(gradethis)
 devtools::load_all()
