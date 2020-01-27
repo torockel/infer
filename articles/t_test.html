@@ -239,7 +239,7 @@
 <a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(observed_statistic,</a>
 <a class="sourceLine" id="cb19-5" data-line-number="5">                <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
 <p><img src="t_test_files/figure-html/visualize-2-sample-1.png" width="576"></p>
-<p>The syntax to do the same thing with the theoretical null looks similar—we just pipe in the theoretical null distribution instead, and drop in <code>method = "theoretical"</code> to <code><a href="../reference/visualize.html">visualize()</a></code>.</p>
+<p>The syntax to do the same thing with the theory-based null distribution looks similar—we just pipe in the theory-based null distribution instead, and drop in <code>method = "theoretical"</code> to <code><a href="../reference/visualize.html">visualize()</a></code>.</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># visualize the theoretical null distribution and test statistic!</span></a>
 <a class="sourceLine" id="cb20-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_theoretical <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/visualize.html">visualize</a></span>(<span class="dt">method =</span> <span class="st">"theoretical"</span>) <span class="op">+</span><span class="st"> </span></a>
