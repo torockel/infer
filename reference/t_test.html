@@ -232,9 +232,9 @@ interval or not. <code>TRUE</code> by default.</p></td>
    <span class='fu'>t_test</span>(<span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>hours</span> ~ <span class='no'>college</span>,
       <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"degree"</span>, <span class='st'>"no degree"</span>),
       <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"two_sided"</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 6
-#&gt;   statistic  t_df  p_value alternative lower_ci upper_ci
-#&gt;       &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
-#&gt; 1     -3.39 1177. 0.000717 two.sided      -3.82    -1.02</div><div class='input'>
+#&gt;   statistic  t_df p_value alternative lower_ci upper_ci
+#&gt;       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1     -1.12  366.   0.264 two.sided      -4.24     1.16</div><div class='input'>
 # see vignette("infer") for more explanation of the
 # intuition behind the infer package, and vignette("t_test") 
 # for more examples of t-tests using infer

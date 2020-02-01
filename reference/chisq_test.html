@@ -192,10 +192,10 @@ explanatory variable.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># chi-squared test of independence for college completion </span>
 <span class='co'># status depending on one's self-identified income class</span>
-<span class='fu'>chisq_test</span>(<span class='no'>gss</span>, <span class='no'>college</span> ~ <span class='no'>finrela</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 3
-#&gt;   statistic chisq_df  p_value
-#&gt;       &lt;dbl&gt;    &lt;int&gt;    &lt;dbl&gt;
-#&gt; 1      225.        5 1.30e-46</div><div class='input'>
+<span class='fu'>chisq_test</span>(<span class='no'>gss</span>, <span class='no'>college</span> ~ <span class='no'>finrela</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Chi-squared approximation may be incorrect</span></div><div class='output co'>#&gt; # A tibble: 1 x 3
+#&gt;   statistic chisq_df   p_value
+#&gt;       &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+#&gt; 1      30.7        5 0.0000108</div><div class='input'>
 <span class='co'># chi-squared goodness of fit test on whether self-identified </span>
 <span class='co'># income class follows a uniform distribution</span>
 <span class='fu'>chisq_test</span>(<span class='no'>gss</span>,
@@ -206,9 +206,9 @@ explanatory variable.</p></td>
                  <span class='st'>"above average"</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>6</span>,
                  <span class='st'>"far above average"</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>6</span>,
                  <span class='st'>"DK"</span> <span class='kw'>=</span> <span class='fl'>1</span>/<span class='fl'>6</span>))</div><div class='output co'>#&gt; # A tibble: 1 x 3
-#&gt;   statistic chisq_df p_value
-#&gt;       &lt;dbl&gt;    &lt;dbl&gt;   &lt;dbl&gt;
-#&gt; 1     2781.        5       0</div><div class='input'>
+#&gt;   statistic chisq_df   p_value
+#&gt;       &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;
+#&gt; 1      488.        5 3.13e-103</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

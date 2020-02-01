@@ -214,46 +214,46 @@ option is currently only applicable for testing point estimates.)</p></li>
 <span class='no'>gss</span> <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='specify.html'>specify</a></span>(<span class='kw'>response</span> <span class='kw'>=</span> <span class='no'>hours</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='hypothesize.html'>hypothesize</a></span>(<span class='kw'>null</span> <span class='kw'>=</span> <span class='st'>"point"</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>40</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'>generate</span>(<span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"bootstrap"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 1244 rows containing missing values.</span></div><div class='output co'>#&gt; Response: hours (numeric)
+ <span class='fu'>generate</span>(<span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"bootstrap"</span>)</div><div class='output co'>#&gt; Response: hours (numeric)
 #&gt; Null Hypothesis: point
-#&gt; # A tibble: 1,756,000 x 2
+#&gt; # A tibble: 500,000 x 2
 #&gt; # Groups:   replicate [1,000]
 #&gt;    replicate hours
 #&gt;        &lt;int&gt; &lt;dbl&gt;
-#&gt;  1         1  34.2
-#&gt;  2         1  31.2
-#&gt;  3         1  74.2
-#&gt;  4         1  47.2
-#&gt;  5         1  54.2
-#&gt;  6         1  39.2
-#&gt;  7         1  24.2
-#&gt;  8         1  29.2
-#&gt;  9         1  54.2
-#&gt; 10         1  34.2
-#&gt; # … with 1,755,990 more rows</div><div class='input'>
+#&gt;  1         1  38.6
+#&gt;  2         1  43.6
+#&gt;  3         1  84.6
+#&gt;  4         1  28.6
+#&gt;  5         1  22.6
+#&gt;  6         1  38.6
+#&gt;  7         1  28.6
+#&gt;  8         1  43.6
+#&gt;  9         1  18.6
+#&gt; 10         1  38.6
+#&gt; # … with 499,990 more rows</div><div class='input'>
 <span class='co'># Generate a null distribution for the independence of</span>
 <span class='co'># two variables by permuting their values 1000 times</span>
 <span class='no'>gss</span> <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='specify.html'>specify</a></span>(<span class='no'>partyid</span> ~ <span class='no'>age</span>) <span class='kw'>%&gt;%</span>
  <span class='fu'><a href='hypothesize.html'>hypothesize</a></span>(<span class='kw'>null</span> <span class='kw'>=</span> <span class='st'>"independence"</span>) <span class='kw'>%&gt;%</span>
- <span class='fu'>generate</span>(<span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"permute"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 37 rows containing missing values.</span></div><div class='output co'>#&gt; Response: partyid (factor)
+ <span class='fu'>generate</span>(<span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"permute"</span>)</div><div class='output co'>#&gt; Response: partyid (factor)
 #&gt; Explanatory: age (numeric)
 #&gt; Null Hypothesis: independence
-#&gt; # A tibble: 2,963,000 x 3
+#&gt; # A tibble: 500,000 x 3
 #&gt; # Groups:   replicate [1,000]
 #&gt;    partyid   age replicate
 #&gt;    &lt;fct&gt;   &lt;dbl&gt;     &lt;int&gt;
-#&gt;  1 rep        37         1
-#&gt;  2 ind        29         1
-#&gt;  3 dem        58         1
-#&gt;  4 rep        40         1
-#&gt;  5 dem        39         1
-#&gt;  6 dem        37         1
-#&gt;  7 rep        53         1
-#&gt;  8 rep        41         1
-#&gt;  9 dem        55         1
-#&gt; 10 dem        47         1
-#&gt; # … with 2,962,990 more rows</div><div class='input'>
+#&gt;  1 dem        36         1
+#&gt;  2 rep        34         1
+#&gt;  3 ind        24         1
+#&gt;  4 dem        42         1
+#&gt;  5 dem        31         1
+#&gt;  6 rep        32         1
+#&gt;  7 dem        48         1
+#&gt;  8 rep        36         1
+#&gt;  9 ind        30         1
+#&gt; 10 rep        33         1
+#&gt; # … with 499,990 more rows</div><div class='input'>
 <span class='co'># More in-depth explanation of how to use the infer package</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/vignette.html'>vignette</a></span>(<span class='st'>"infer"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: vignette ‘infer’ not found</span></div><div class='input'>
 </div></pre>

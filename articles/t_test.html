@@ -121,70 +121,69 @@
 <p>In this vignette, we’ll walk through conducting t-tests using <code>infer</code>. We’ll start out with a 1-sample t-test, which compares a sample mean to a hypothesized true mean value. Then, we’ll discuss paired t-tests, which are a special use case of 1-sample t-tests, and evaluate whether differences in paired values (e.g. some measure taken of a person before and after an experiment) differ from 0. Finally, we’ll wrap up with 2-sample t-tests, testing the difference in means of two populations using a sample of data drawm from them.</p>
 <p>Throughout this vignette, we’ll make use of the <code>gss</code> dataset supplied by <code>infer</code>, which contains a sample of data from the General Social Survey. See <code><a href="../reference/gss.html">?gss</a></code> for more information on the variables included and their source. Note that this data (and our examples on it) are for demonstration purposes only, and will not necessarily provide accurate estimates unless weighted properly. For these examples, let’s suppose that this dataset is a representative sample of a population we want to learn about: American adults. The data looks like this:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(gss)</a></code></pre></div>
-<pre><code>## Observations: 3,000
+<pre><code>## Observations: 500
 ## Variables: 11
-## $ year    &lt;dbl&gt; 2008, 2006, 1985, 1987, 2006, 1986, 1977, 1998, 2012, 1982, 1…
-## $ age     &lt;dbl&gt; 37, 29, 58, 40, 39, 37, 53, 41, 55, 47, 36, 75, 22, 19, 34, 5…
-## $ sex     &lt;fct&gt; male, female, male, male, female, male, female, male, male, m…
-## $ college &lt;fct&gt; no degree, no degree, degree, degree, no degree, no degree, n…
-## $ partyid &lt;fct&gt; dem, dem, ind, rep, dem, dem, dem, rep, ind, rep, rep, rep, r…
-## $ hompop  &lt;dbl&gt; 4, 3, 3, 5, 5, 5, 4, 1, 5, 4, 5, 2, 3, 2, 5, 2, 5, 7, 1, 3, 4…
-## $ hours   &lt;dbl&gt; 50, NA, 60, 84, 40, 50, NA, 60, NA, 40, 20, NA, 40, 40, 20, 5…
-## $ income  &lt;ord&gt; $25000 or more, lt $1000, $25000 or more, $25000 or more, $60…
-## $ class   &lt;fct&gt; working class, middle class, middle class, middle class, NA, …
-## $ finrela &lt;fct&gt; below average, below average, far above average, far below av…
-## $ weight  &lt;dbl&gt; 0.8755, 0.4297, 1.5544, 1.0104, 0.8593, 1.0072, 0.9881, 0.550…</code></pre>
+## $ year    &lt;dbl&gt; 2014, 1994, 1998, 1996, 1994, 1996, 1990, 2016, 2000, 1998, 2…
+## $ age     &lt;dbl&gt; 36, 34, 24, 42, 31, 32, 48, 36, 30, 33, 21, 30, 38, 49, 25, 5…
+## $ sex     &lt;fct&gt; male, female, male, male, male, female, female, female, femal…
+## $ college &lt;fct&gt; degree, no degree, degree, no degree, degree, no degree, no d…
+## $ partyid &lt;fct&gt; ind, rep, ind, ind, rep, rep, dem, ind, rep, dem, dem, ind, d…
+## $ hompop  &lt;dbl&gt; 3, 4, 1, 4, 2, 4, 2, 1, 5, 2, 4, 3, 4, 4, 2, 2, 3, 2, 1, 2, 5…
+## $ hours   &lt;dbl&gt; 50, 31, 40, 40, 40, 53, 32, 20, 40, 40, 23, 52, 38, 72, 48, 4…
+## $ income  &lt;ord&gt; $25000 or more, $20000 - 24999, $25000 or more, $25000 or mor…
+## $ class   &lt;fct&gt; middle class, working class, working class, working class, mi…
+## $ finrela &lt;fct&gt; below average, below average, below average, above average, a…
+## $ weight  &lt;dbl&gt; 0.8960, 1.0825, 0.5501, 1.0864, 1.0825, 1.0864, 1.0627, 0.478…</code></pre>
 </div>
 <div id="sample-t-test" class="section level3">
 <h3 class="hasAnchor">
 <a href="#sample-t-test" class="anchor"></a>1-Sample t-Test</h3>
 <p>The 1-sample t-test can be used to test whether a sample of continuous data could have plausibly come from a population with a specified mean. As an example, we’ll test whether the average American adult works 40 hours a week using data from the <code>gss</code>. To do so, we make use of the <code>hours</code> variable, giving the number of hours that respondents reported having worked in the previous week. The distribution of <code>hours</code> in the observed data looks like this:</p>
-<pre><code>## Warning: Removed 1244 rows containing non-finite values (stat_bin).</code></pre>
 <p><img src="t_test_files/figure-html/plot-1-sample-1.png" width="576"></p>
 <p>Note the warning about missing values—many respondents’ entries are missing. If we were actually carrying out this hypothesis test, we might look further into how this data was collected; it’s possible that some of the missing values should actually be 0 hours.</p>
 <p>In general, though, it looks like most respondents reported having worked 40 hours, but there’s quite a bit of variability. Let’s test whether we have evidence that the true mean number of hours that Americans work per week is 40.</p>
 <p>First, to calculate the observed statistic, we can use <code><a href="../reference/specify.html">specify()</a></code> and <code><a href="../reference/calculate.html">calculate()</a></code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># calculate the observed statistic</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">observed_statistic &lt;-<span class="st"> </span>gss <span class="op">%&gt;%</span></a>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># calculate the observed statistic</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">observed_statistic &lt;-<span class="st"> </span>gss <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/specify.html">specify</a></span>(<span class="dt">response =</span> hours) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/hypothesize.html">hypothesize</a></span>(<span class="dt">null =</span> <span class="st">"point"</span>, <span class="dt">mu =</span> <span class="dv">40</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>)</a></code></pre></div>
+<p>The observed statistic is 2.0852. Now, we want to compare this statistic to a null distribution, generated under the assumption that the mean was actually 40, to get a sense of how likely it would be for us to see this observed statistic if the true number of hours worked per week in the population was really 40.</p>
+<p>We can <code>generate</code> the null distribution using the bootstrap. In the bootstrap, for each replicate, a sample of size equal to the input sample size is drawn (with replacement) from the input sample data. This allows us to get a sense of how much variability we’d expect to see in the entire population so that we can then understand how unlikely our sample mean would be.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># generate the null distribution</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">null_distribution_<span class="dv">1</span>_sample &lt;-<span class="st"> </span>gss <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/specify.html">specify</a></span>(<span class="dt">response =</span> hours) <span class="op">%&gt;%</span></a>
 <a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/hypothesize.html">hypothesize</a></span>(<span class="dt">null =</span> <span class="st">"point"</span>, <span class="dt">mu =</span> <span class="dv">40</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>)</a></code></pre></div>
-<p>The observed statistic is 2.3104. Now, we want to compare this statistic to a null distribution, generated under the assumption that the mean was actually 40, to get a sense of how likely it would be for us to see this observed statistic if the true number of hours worked per week in the population was really 40.</p>
-<p>We can <code>generate</code> the null distribution using the bootstrap. In the bootstrap, for each replicate, a sample of size equal to the input sample size is drawn (with replacement) from the input sample data. This allows us to get a sense of how much variability we’d expect to see in the entire population so that we can then understand how unlikely our sample mean would be.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># generate the null distribution</span></a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">null_distribution_<span class="dv">1</span>_sample &lt;-<span class="st"> </span>gss <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/specify.html">specify</a></span>(<span class="dt">response =</span> hours) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/hypothesize.html">hypothesize</a></span>(<span class="dt">null =</span> <span class="st">"point"</span>, <span class="dt">mu =</span> <span class="dv">40</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/generate.html">generate</a></span>(<span class="dt">reps =</span> <span class="dv">1000</span>, <span class="dt">type =</span> <span class="st">"bootstrap"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/generate.html">generate</a></span>(<span class="dt">reps =</span> <span class="dv">1000</span>, <span class="dt">type =</span> <span class="st">"bootstrap"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>)</a></code></pre></div>
 <p>To get a sense for what these distributions look like, and where our observed statistic falls, we can use <code><a href="../reference/visualize.html">visualize()</a></code>:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># visualize the null distribution and test statistic!</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">null_distribution_<span class="dv">1</span>_sample <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/visualize.html">visualize</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(observed_statistic,</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">                <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># visualize the null distribution and test statistic!</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">null_distribution_<span class="dv">1</span>_sample <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/visualize.html">visualize</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(observed_statistic,</a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">                <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
 <p><img src="t_test_files/figure-html/visualize-1-sample-1.png" width="576"></p>
-<p>It looks like our observed statistic of 2.3104 would be relatively unlikely if the true mean was actually 40 hours a week. More exactly, we can calculate the p-value:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># calculate the p value from the test statistic and null distribution</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">p_value_<span class="dv">1</span>_sample &lt;-<span class="st"> </span>null_distribution_<span class="dv">1</span>_sample <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="dt">obs_stat =</span> observed_statistic,</a>
-<a class="sourceLine" id="cb7-4" data-line-number="4">              <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a>
-<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb7-6" data-line-number="6">p_value_<span class="dv">1</span>_sample</a></code></pre></div>
+<p>It looks like our observed statistic of 2.0852 would be relatively unlikely if the true mean was actually 40 hours a week. More exactly, we can calculate the p-value:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># calculate the p value from the test statistic and null distribution</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">p_value_<span class="dv">1</span>_sample &lt;-<span class="st"> </span>null_distribution_<span class="dv">1</span>_sample <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="dt">obs_stat =</span> observed_statistic,</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">              <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6">p_value_<span class="dv">1</span>_sample</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.008</code></pre>
-<p>Thus, if the true mean number of hours worked per week was really 40, the probability that we would see a test statistic as or more extreme than 2.3104 is approximately 0.008.</p>
+## 1   0.032</code></pre>
+<p>Thus, if the true mean number of hours worked per week was really 40, the probability that we would see a test statistic as or more extreme than 2.0852 is approximately 0.032.</p>
 <p>Note that, equivalently to the steps shown above, the package supplies a wrapper function, <code>t_test</code>, to carry out 1-sample t-Tests on tidy data. The syntax looks like this:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="../reference/t_test.html">t_test</a></span>(gss, <span class="dt">response =</span> hours, <span class="dt">mu =</span> <span class="dv">40</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="../reference/t_test.html">t_test</a></span>(gss, <span class="dt">response =</span> hours, <span class="dt">mu =</span> <span class="dv">40</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 6
 ##   statistic  t_df p_value alternative lower_ci upper_ci
 ##       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
-## 1      2.31  1755  0.0210 two.sided       40.1     41.4</code></pre>
+## 1      2.09   499  0.0376 two.sided       40.1     42.7</code></pre>
 <p>Also, to just calculate the observed statistic, the package supplies the wrapper <code><a href="../reference/t_stat.html">t_stat()</a></code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="../reference/t_stat.html">t_stat</a></span>(gss, <span class="dt">response =</span> hours, <span class="dt">mu =</span> <span class="dv">40</span>)</a></code></pre></div>
-<pre><code>## [1] 2.31</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/t_stat.html">t_stat</a></span>(gss, <span class="dt">response =</span> hours, <span class="dt">mu =</span> <span class="dv">40</span>)</a></code></pre></div>
+<pre><code>## [1] 2.085</code></pre>
 </div>
 <div id="paired-t-test" class="section level3">
 <h3 class="hasAnchor">
@@ -196,85 +195,81 @@
 <h3 class="hasAnchor">
 <a href="#sample-t-test-1" class="anchor"></a>2-Sample t-Test</h3>
 <p>2-Sample t-Tests evaluate the difference in mean values of two populations using data randomly-sampled from the population that approximately follows a normal distribution. As an example, we’ll test if Americans work the same number of hours a week regardless of whether they have a college degree or not using data from the <code>gss</code>. The <code>college</code> and <code>hours</code> variables allow us to do so:</p>
-<pre><code>## Warning: Removed 1238 rows containing non-finite values (stat_boxplot).</code></pre>
 <p><img src="t_test_files/figure-html/plot-2-sample-1.png" width="576"></p>
 <p>It looks like both of these distributions are centered near 40 hours a week, but the distribution for those with a degree is slightly right skewed.</p>
 <p>Again, note the warning about missing values—many respondents’ values are missing. If we were actually carrying out this hypothesis test, we might look further into how this data was collected; it’s possible that whether or not a value in either of these columns is missing is related to what that value would be.</p>
-<p>To carry out this hypothesis test, we first need to get rid of rows in the dataset that have an NA in the <code>college</code> column, so that our only two groups are <code>no degree</code> and <code>degree</code>. The following code will do that for us:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">gss_small &lt;-<span class="st"> </span>gss <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span>tidyr<span class="op">::</span><span class="kw"><a href="https://tidyr.tidyverse.org/reference/drop_na.html">drop_na</a></span>(college)</a></code></pre></div>
 <p>Now, to calculate the observed <span class="math inline">\(t\)</span> statistic, we can use <code><a href="../reference/specify.html">specify()</a></code> and <code><a href="../reference/calculate.html">calculate()</a></code>.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># calculate the observed statistic</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2">observed_statistic &lt;-<span class="st"> </span>gss_small <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/specify.html">specify</a></span>(hours <span class="op">~</span><span class="st"> </span>college) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>, <span class="dt">order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>))</a>
-<a class="sourceLine" id="cb15-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb15-6" data-line-number="6">observed_statistic</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="co"># calculate the observed statistic</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2">observed_statistic &lt;-<span class="st"> </span>gss <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/specify.html">specify</a></span>(hours <span class="op">~</span><span class="st"> </span>college) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>, <span class="dt">order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>))</a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6">observed_statistic</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##    stat
 ##   &lt;dbl&gt;
-## 1  3.39</code></pre>
+## 1  1.12</code></pre>
 <p>Note that, in the line <code><a href="../reference/specify.html">specify(hours ~ college)</a></code>, we could have swapped this out with the syntax <code><a href="../reference/specify.html">specify(response = hours, explanatory = college)</a></code>!</p>
 <p>The <code>order</code> argument in that <code>calculate</code> line gives the order to subtract the mean values in: in our case, we’re taking the mean number of hours worked by those with a degree minus the mean number of hours worked by those without a degree; a positive difference, then, would mean that people with degrees worked more than those without a degree.</p>
 <p>Now, we want to compare this <span class="math inline">\(t\)</span>-statistic to a null distribution, generated under the assumption that the number of hours worked a week has no relationship with whether or not one has a college degree, to get a sense of how likely it would be for us to see this <span class="math inline">\(t\)</span>-statistic if there were really no relationship between these two variables.</p>
 <p>We can <code>generate</code> the null distribution using permutation, where, for each replicate, each value of degree status will be randomly reassigned (without replacement) to a new number of hours worked per week in the sample in order to break any assocation between the two.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># generate the null distribution with randomization</span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_permute &lt;-<span class="st"> </span>gss_small <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/specify.html">specify</a></span>(hours <span class="op">~</span><span class="st"> </span>college) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/hypothesize.html">hypothesize</a></span>(<span class="dt">null =</span> <span class="st">"independence"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/generate.html">generate</a></span>(<span class="dt">reps =</span> <span class="dv">1000</span>, <span class="dt">type =</span> <span class="st">"permute"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>, <span class="dt">order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># generate the null distribution with randomization</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_permute &lt;-<span class="st"> </span>gss <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/specify.html">specify</a></span>(hours <span class="op">~</span><span class="st"> </span>college) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/hypothesize.html">hypothesize</a></span>(<span class="dt">null =</span> <span class="st">"independence"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="../reference/generate.html">generate</a></span>(<span class="dt">reps =</span> <span class="dv">1000</span>, <span class="dt">type =</span> <span class="st">"permute"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>, <span class="dt">order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>))</a></code></pre></div>
 <p>We can also generate the null distribution using the theoretical <span class="math inline">\(t\)</span> distribution. The code to do that looks like this:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># generate the null distribution with the theoretical t</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_theoretical &lt;-<span class="st"> </span>gss_small <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/specify.html">specify</a></span>(hours <span class="op">~</span><span class="st"> </span>college) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/hypothesize.html">hypothesize</a></span>(<span class="dt">null =</span> <span class="st">"independence"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="st">  </span><span class="co"># generate() isn't used for the theoretical version!</span></a>
-<a class="sourceLine" id="cb18-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>, <span class="dt">order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="co"># generate the null distribution with the theoretical t</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_theoretical &lt;-<span class="st"> </span>gss <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/specify.html">specify</a></span>(hours <span class="op">~</span><span class="st"> </span>college) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/hypothesize.html">hypothesize</a></span>(<span class="dt">null =</span> <span class="st">"independence"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span><span class="co"># generate() isn't used for the theoretical version!</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="../reference/calculate.html">calculate</a></span>(<span class="dt">stat =</span> <span class="st">"t"</span>, <span class="dt">order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>))</a></code></pre></div>
 <p>Again, note that, in the lines <code><a href="../reference/specify.html">specify(hours ~ college)</a></code> in the above two chunks, we could have used the syntax <code><a href="../reference/specify.html">specify(response = hours, explanatory = college)</a></code> instead!</p>
 <p>To get a sense for what these distributions look like, and where our observed statistic falls, we can use <code><a href="../reference/visualize.html">visualize()</a></code>. First, to do this with the randomization-based distribution:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># visualize the randomization-based null distribution and test statistic!</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_permute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/visualize.html">visualize</a></span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(observed_statistic,</a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">                <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="co"># visualize the randomization-based null distribution and test statistic!</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_permute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/visualize.html">visualize</a></span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(observed_statistic,</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">                <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
 <p><img src="t_test_files/figure-html/visualize-2-sample-1.png" width="576"></p>
 <p>The syntax to do the same thing with the theory-based null distribution looks similar—we just pipe in the theory-based null distribution instead, and drop in <code>method = "theoretical"</code> to <code><a href="../reference/visualize.html">visualize()</a></code>.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="co"># visualize the theoretical null distribution and test statistic!</span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_theoretical <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/visualize.html">visualize</a></span>(<span class="dt">method =</span> <span class="st">"theoretical"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(observed_statistic,</a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">                <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="co"># visualize the theoretical null distribution and test statistic!</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_theoretical <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/visualize.html">visualize</a></span>(<span class="dt">method =</span> <span class="st">"theoretical"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(observed_statistic,</a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">                <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
 <p><img src="t_test_files/figure-html/visualize-2-sample-theoreticql-1.png" width="576"></p>
 <p>We could also visualize both null distributions to get a sense of how the randomization-based and theoretical versions relate. To do so, start off with the randomization-based null distribution, and then drop in <code>method = "both"</code> to <code><a href="../reference/visualize.html">visualize()</a></code>.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="co"># visualize both null distributions and test statistic!</span></a>
-<a class="sourceLine" id="cb21-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_permute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/visualize.html">visualize</a></span>(<span class="dt">method =</span> <span class="st">"both"</span>) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(observed_statistic,</a>
-<a class="sourceLine" id="cb21-5" data-line-number="5">                <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="co"># visualize both null distributions and test statistic!</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2">null_distribution_<span class="dv">2</span>_sample_permute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="../reference/visualize.html">visualize</a></span>(<span class="dt">method =</span> <span class="st">"both"</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(observed_statistic,</a>
+<a class="sourceLine" id="cb18-5" data-line-number="5">                <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
 <p><img src="t_test_files/figure-html/visualize-2-sample-both-1.png" width="576"></p>
-<p>Regardless, it looks like our observed statistic of 3.3921 would be really unlikely if there was truly no relationship between degree status and number of hours worked. More exactly, we can calculate the p-value; theoretical p-values are not yet supported, so we’ll use the randomization-based null distribution to do calculate the p-value.</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="co"># calculate the p value from the randomization-based null </span></a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co"># distribution and the observed statistic</span></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3">p_value_<span class="dv">2</span>_sample &lt;-<span class="st"> </span>null_distribution_<span class="dv">2</span>_sample_permute <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb22-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="dt">obs_stat =</span> observed_statistic,</a>
-<a class="sourceLine" id="cb22-5" data-line-number="5">              <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a>
-<a class="sourceLine" id="cb22-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb22-7" data-line-number="7">p_value_<span class="dv">2</span>_sample</a></code></pre></div>
+<p>Regardless, it looks like our observed statistic of 1.1193 would be really unlikely if there was truly no relationship between degree status and number of hours worked. More exactly, we can calculate the p-value; theoretical p-values are not yet supported, so we’ll use the randomization-based null distribution to do calculate the p-value.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="co"># calculate the p value from the randomization-based null </span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co"># distribution and the observed statistic</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">p_value_<span class="dv">2</span>_sample &lt;-<span class="st"> </span>null_distribution_<span class="dv">2</span>_sample_permute <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="dt">obs_stat =</span> observed_statistic,</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">              <span class="dt">direction =</span> <span class="st">"two_sided"</span>)</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb19-7" data-line-number="7">p_value_<span class="dv">2</span>_sample</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1       0</code></pre>
-<p>Thus, if there were really no relationship between the number of hours worked a week and whether one has a college degree, the probability that we would see a statistic as or more extreme than 3.3921 is approximately 0.</p>
+## 1   0.268</code></pre>
+<p>Thus, if there were really no relationship between the number of hours worked a week and whether one has a college degree, the probability that we would see a statistic as or more extreme than 1.1193 is approximately 0.268.</p>
 <p>Note that, equivalently to the steps shown above, the package supplies a wrapper function, <code>t_test</code>, to carry out 2-sample t-Tests on tidy data. The syntax looks like this:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw"><a href="../reference/t_test.html">t_test</a></span>(<span class="dt">x =</span> gss_small, </a>
-<a class="sourceLine" id="cb24-2" data-line-number="2">       <span class="dt">formula =</span> hours <span class="op">~</span><span class="st"> </span>college, </a>
-<a class="sourceLine" id="cb24-3" data-line-number="3">       <span class="dt">order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>),</a>
-<a class="sourceLine" id="cb24-4" data-line-number="4">       <span class="dt">alternative =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw"><a href="../reference/t_test.html">t_test</a></span>(<span class="dt">x =</span> gss, </a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">       <span class="dt">formula =</span> hours <span class="op">~</span><span class="st"> </span>college, </a>
+<a class="sourceLine" id="cb21-3" data-line-number="3">       <span class="dt">order =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>),</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4">       <span class="dt">alternative =</span> <span class="st">"two_sided"</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 6
-##   statistic  t_df  p_value alternative lower_ci upper_ci
-##       &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
-## 1     -3.39 1177. 0.000717 two.sided      -3.82    -1.02</code></pre>
+##   statistic  t_df p_value alternative lower_ci upper_ci
+##       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;
+## 1     -1.12  366.   0.264 two.sided      -4.24     1.16</code></pre>
 <p>In the above example, we specified the relationship with the syntax <code>formula = hours ~ college</code>; we could have also written <code>response = hours, explanatory = college</code>.</p>
 </div>
   </div>

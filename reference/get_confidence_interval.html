@@ -215,7 +215,8 @@ the confidence interval.</p>
 <span class='no'>point_estimate</span> <span class='kw'>&lt;-</span> <span class='no'>gss</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='specify.html'>specify</a></span>(<span class='kw'>response</span> <span class='kw'>=</span> <span class='no'>hours</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='calculate.html'>calculate</a></span>(<span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"mean"</span>) <span class='kw'>%&gt;%</span>
-  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>()</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 1244 rows containing missing values.</span></div><div class='input'>
+  <span class='kw pkg'>dplyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/pull.html'>pull</a></span>()
+
 <span class='co'># starting with the gss dataset</span>
 <span class='no'>gss</span> <span class='kw'>%&gt;%</span>
   <span class='co'># ...we're interested in the number of hours worked per week</span>
@@ -230,10 +231,10 @@ the confidence interval.</p>
                           <span class='co'># at the 95% confidence level</span>
                           <span class='kw'>level</span> <span class='kw'>=</span> <span class='fl'>.95</span>,
                           <span class='co'># using the standard error method</span>
-                          <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"se"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 1244 rows containing missing values.</span></div><div class='output co'>#&gt; # A tibble: 1 x 2
+                          <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"se"</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
 #&gt;   lower upper
 #&gt;   &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1  40.1  41.4</div><div class='input'>
+#&gt; 1  40.1  42.7</div><div class='input'>
 <span class='co'># More in-depth explanation of how to use the infer package</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/vignette.html'>vignette</a></span>(<span class='st'>"infer"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: vignette ‘infer’ not found</span></div><div class='input'> 
 </div></pre>
