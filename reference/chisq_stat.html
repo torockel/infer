@@ -42,9 +42,8 @@
 
 
 <meta property="og:title" content="Tidy chi-squared test statistic — chisq_stat" />
-<meta property="og:description" content="A shortcut wrapper function to get the observed test statistic for a chisq
-test. Uses chisq.test(), which applies a continuity
-correction." />
+<meta property="og:description" content="@description
+" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -155,9 +154,8 @@ correction." />
     </div>
 
     <div class="ref-description">
-    <p>A shortcut wrapper function to get the observed test statistic for a chisq
-test. Uses <a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a>, which applies a continuity
-correction.</p>
+    <p>@description
+<a href='https://www.tidyverse.org/lifecycle/#maturing'><img src='figures/lifecycle-maturing.svg' alt='Maturing lifecycle'></a></p>
     </div>
 
     <pre class="usage"><span class='fu'>chisq_stat</span>(<span class='no'>x</span>, <span class='no'>formula</span>, <span class='kw'>response</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>explanatory</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
@@ -190,6 +188,11 @@ explanatory variable.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>A shortcut wrapper function to get the observed test statistic for a chisq
+test. Uses <a href='https://rdrr.io/r/stats/chisq.test.html'>chisq.test()</a>, which applies a continuity
+correction.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># chi-squared test statistic for test of independence </span>
@@ -213,6 +216,7 @@ explanatory variable.</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
