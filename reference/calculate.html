@@ -230,16 +230,16 @@ visualizations (with a warning) and raise an error in p-value calculations.</p>
  <span class='fu'>calculate</span>(<span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)</div><div class='output co'>#&gt; # A tibble: 1,000 x 2
 #&gt;    replicate  stat
 #&gt;        &lt;int&gt; &lt;dbl&gt;
-#&gt;  1         1  40.0
-#&gt;  2         2  40.0
-#&gt;  3         3  39.8
-#&gt;  4         4  39.5
-#&gt;  5         5  39.4
-#&gt;  6         6  39.6
-#&gt;  7         7  39.3
-#&gt;  8         8  40.5
-#&gt;  9         9  39.8
-#&gt; 10        10  41.3
+#&gt;  1         1  39.2
+#&gt;  2         2  39.4
+#&gt;  3         3  40.1
+#&gt;  4         4  39.6
+#&gt;  5         5  40.8
+#&gt;  6         6  39.9
+#&gt;  7         7  39.9
+#&gt;  8         8  40.8
+#&gt;  9         9  39.6
+#&gt; 10        10  41.0
 #&gt; # … with 990 more rows</div><div class='input'>
 <span class='co'># calculate a null distribution assuming independence between age</span>
 <span class='co'># of respondent and whether they have a college degree</span>
@@ -250,16 +250,16 @@ visualizations (with a warning) and raise an error in p-value calculations.</p>
  <span class='fu'>calculate</span>(<span class='st'>"diff in means"</span>, <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"degree"</span>, <span class='st'>"no degree"</span>))</div><div class='output co'>#&gt; # A tibble: 1,000 x 2
 #&gt;    replicate   stat
 #&gt;        &lt;int&gt;  &lt;dbl&gt;
-#&gt;  1         1 -1.02 
-#&gt;  2         2  0.227
-#&gt;  3         3 -0.196
-#&gt;  4         4 -0.161
-#&gt;  5         5 -0.240
-#&gt;  6         6  2.25 
-#&gt;  7         7 -2.06 
-#&gt;  8         8 -1.26 
-#&gt;  9         9 -0.514
-#&gt; 10        10  1.06 
+#&gt;  1         1 -1.04 
+#&gt;  2         2  0.888
+#&gt;  3         3  1.89 
+#&gt;  4         4 -0.858
+#&gt;  5         5  0.500
+#&gt;  6         6 -1.40 
+#&gt;  7         7 -0.540
+#&gt;  8         8  1.10 
+#&gt;  9         9 -0.858
+#&gt; 10        10  2.02 
 #&gt; # … with 990 more rows</div><div class='input'>
 <span class='co'># More in-depth explanation of how to use the infer package</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/vignette.html'>vignette</a></span>(<span class='st'>"infer"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: vignette ‘infer’ not found</span></div><div class='input'>
