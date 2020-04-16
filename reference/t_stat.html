@@ -237,14 +237,16 @@ interval or not. <code>TRUE</code> by default.</p></td>
 <span class='co'># t test statistic for true mean number of hours worked</span>
 <span class='co'># per week of 40</span>
 <span class='no'>gss</span> <span class='kw'>%&gt;%</span>
-   <span class='fu'>t_stat</span>(<span class='kw'>response</span> <span class='kw'>=</span> <span class='no'>hours</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>40</span>)</div><div class='output co'>#&gt; [1] 2.085191</div><div class='input'>
+   <span class='fu'>t_stat</span>(<span class='kw'>response</span> <span class='kw'>=</span> <span class='no'>hours</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>40</span>)</div><div class='output co'>#&gt;        t 
+#&gt; 2.085191 </div><div class='input'>
 <span class='co'># t test statistic for number of hours worked per week</span>
 <span class='co'># by college degree status</span>
 <span class='no'>gss</span> <span class='kw'>%&gt;%</span>
    <span class='kw pkg'>tidyr</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/drop_na.html'>drop_na</a></span>(<span class='no'>college</span>) <span class='kw'>%&gt;%</span>
    <span class='fu'>t_stat</span>(<span class='kw'>formula</span> <span class='kw'>=</span> <span class='no'>hours</span> ~ <span class='no'>college</span>,
       <span class='kw'>order</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"degree"</span>, <span class='st'>"no degree"</span>),
-      <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"two_sided"</span>)</div><div class='output co'>#&gt; [1] -1.11931</div><div class='input'>
+      <span class='kw'>alternative</span> <span class='kw'>=</span> <span class='st'>"two_sided"</span>)</div><div class='output co'>#&gt;        t 
+#&gt; -1.11931 </div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -261,7 +263,7 @@ interval or not. <code>TRUE</code> by default.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

@@ -124,8 +124,8 @@
 <p>In this vignette, we’ll walk through conducting t-tests using <code>infer</code>. We’ll start out with a 1-sample t-test, which compares a sample mean to a hypothesized true mean value. Then, we’ll discuss paired t-tests, which are a special use case of 1-sample t-tests, and evaluate whether differences in paired values (e.g. some measure taken of a person before and after an experiment) differ from 0. Finally, we’ll wrap up with 2-sample t-tests, testing the difference in means of two populations using a sample of data drawm from them.</p>
 <p>Throughout this vignette, we’ll make use of the <code>gss</code> dataset supplied by <code>infer</code>, which contains a sample of data from the General Social Survey. See <code><a href="../reference/gss.html">?gss</a></code> for more information on the variables included and their source. Note that this data (and our examples on it) are for demonstration purposes only, and will not necessarily provide accurate estimates unless weighted properly. For these examples, let’s suppose that this dataset is a representative sample of a population we want to learn about: American adults. The data looks like this:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(<span class="no">gss</span>)</pre></body></html></div>
-<pre><code>## Observations: 500
-## Variables: 11
+<pre><code>## Rows: 500
+## Columns: 11
 ## $ year    &lt;dbl&gt; 2014, 1994, 1998, 1996, 1994, 1996, 1990, 2016, 2000, 1998, 2…
 ## $ age     &lt;dbl&gt; 36, 34, 24, 42, 31, 32, 48, 36, 30, 33, 21, 30, 38, 49, 25, 5…
 ## $ sex     &lt;fct&gt; male, female, male, male, male, female, female, female, femal…
@@ -186,7 +186,8 @@
 ## 1      2.09   499  0.0376 two.sided       40.1     42.7</code></pre>
 <p>Also, to just calculate the observed statistic, the package supplies the wrapper <code><a href="../reference/t_stat.html">t_stat()</a></code>.</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="../reference/t_stat.html">t_stat</a></span>(<span class="no">gss</span>, <span class="kw">response</span> <span class="kw">=</span> <span class="no">hours</span>, <span class="kw">mu</span> <span class="kw">=</span> <span class="fl">40</span>)</pre></body></html></div>
-<pre><code>## [1] 2.085</code></pre>
+<pre><code>##     t 
+## 2.085</code></pre>
 </div>
 <div id="paired-t-test" class="section level3">
 <h3 class="hasAnchor">
@@ -290,7 +291,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
