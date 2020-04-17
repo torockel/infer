@@ -168,7 +168,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.038</code></pre>
+## 1   0.032</code></pre>
 </div>
 <div id="one-numerical-variable-standardized-mean-t" class="section level3">
 <h3 class="hasAnchor">
@@ -211,7 +211,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.026</code></pre>
+## 1   0.044</code></pre>
 <p>Alternatively, using the <code>t_test</code> wrapper:</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="no">gss</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/t_test.html">t_test</a></span>(<span class="kw">response</span> <span class="kw">=</span> <span class="no">hours</span>, <span class="kw">mu</span> <span class="kw">=</span> <span class="fl">40</span>)</pre></body></html></div>
@@ -243,7 +243,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.014</code></pre>
+## 1   0.008</code></pre>
 </div>
 <div id="one-categorical-one-proportion" class="section level3">
 <h3 class="hasAnchor">
@@ -268,7 +268,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1    0.27</code></pre>
+## 1   0.274</code></pre>
 <p>Note that logical variables will be coerced to factors:</p>
 <div class="sourceCode" id="cb29"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">&lt;-</span> <span class="no">gss</span> <span class="kw">%&gt;%</span>
   <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span>(<span class="kw">is_female</span> <span class="kw">=</span> (<span class="no">sex</span> <span class="kw">==</span> <span class="st">"female"</span>)) <span class="kw">%&gt;%</span>
@@ -313,7 +313,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.956</code></pre>
+## 1       1</code></pre>
 <p><code>infer</code> also provides functionality to calculate ratios of proportions. The workflow looks similar to that for <code>diff in props</code>.</p>
 <p>Calculating the observed statistic,</p>
 <div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">r_hat</span> <span class="kw">&lt;-</span> <span class="no">gss</span> <span class="kw">%&gt;%</span>
@@ -335,7 +335,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1       1</code></pre>
+## 1   0.964</code></pre>
 <p>In addition, the package provides functionality to calculate odds ratios. The workflow also looks similar to that for <code>diff in props</code>.</p>
 <p>Calculating the observed statistic,</p>
 <div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="no">or_hat</span> <span class="kw">&lt;-</span> <span class="no">gss</span> <span class="kw">%&gt;%</span>
@@ -528,7 +528,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.114</code></pre>
+## 1   0.092</code></pre>
 <p>Alternatively, using the wrapper to carry out the test,</p>
 <div class="sourceCode" id="cb77"><html><body><pre class="r"><span class="no">gss</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/chisq_test.html">chisq_test</a></span>(<span class="kw">formula</span> <span class="kw">=</span> <span class="no">finrela</span> ~ <span class="no">sex</span>)</pre></body></html></div>
@@ -560,7 +560,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.448</code></pre>
+## 1   0.466</code></pre>
 </div>
 <div id="one-numerical-variable-one-categorical-2-levels-t" class="section level3">
 <h3 class="hasAnchor">
@@ -599,7 +599,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.456</code></pre>
+## 1   0.408</code></pre>
 <p>Note the similarities in this plot and the previous one.</p>
 </div>
 <div id="one-numerical-variable-one-categorical-2-levels-diff-in-medians" class="section level3">
@@ -625,7 +625,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.176</code></pre>
+## 1   0.172</code></pre>
 </div>
 <div id="one-numerical-one-categorical-2-levels---anova" class="section level3">
 <h3 class="hasAnchor">
@@ -664,7 +664,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.067</code></pre>
+## 1   0.046</code></pre>
 </div>
 <div id="two-numerical-vars---slr" class="section level3">
 <h3 class="hasAnchor">
@@ -689,7 +689,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.912</code></pre>
+## 1   0.838</code></pre>
 </div>
 <div id="two-numerical-vars---correlation" class="section level3">
 <h3 class="hasAnchor">
@@ -714,7 +714,7 @@
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
-## 1   0.872</code></pre>
+## 1     0.9</code></pre>
 </div>
 <div id="two-numerical-vars---slr-t" class="section level3">
 <h3 class="hasAnchor">
