@@ -417,12 +417,12 @@
 <p>Where does our sample’s observed statistic lie on this distribution? We can use the <code>obs_stat</code> argument to specify this.</p>
 <div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="no">null_dist</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/visualize.html">visualize</a></span>() +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">point_estimate</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">point_estimate</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="infer_files/figure-html/visualize2-1.png" width="576"></p>
 <p>Notice that <code>infer</code> has also shaded the regions of the null distribution that are as (or more) extreme than our observed statistic. (Also, note that we now use the <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> operator to apply the <code>shade_p_value</code> function. This is because <code>visualize</code> outputs a plot object from <code>ggplot2</code> instead of a data frame, and the <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> operator is needed to add the p-value layer to the plot object.) The red bar looks like it’s slightly far out on the right tail of the null distribution, so observing a sample mean of 41.382 hours would be somewhat unlikely if the mean was actually 40 hours. How unlikely, though?</p>
 <div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="co"># get a two-tailed p-value</span>
 <span class="no">p_value</span> <span class="kw">&lt;-</span> <span class="no">null_dist</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">point_estimate</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">point_estimate</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)
 
 <span class="no">p_value</span></pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1

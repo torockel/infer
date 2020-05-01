@@ -160,11 +160,11 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"mean"</span>)</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">x_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">x_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-4-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">x_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">x_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -194,20 +194,20 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"t"</span>)</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-10-1.png" width="576"></p>
 <p>Alternatively, visualizing the observed statistic using the theory-based null distribution,</p>
 <div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn_theoretical</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"theoretical"</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-11-1.png" width="576"></p>
 <p>Alternatively, visualizing the observed statistic using both of the null distributions,</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"both"</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-12-1.png" width="576"></p>
 <p>Note that the above code makes use of the randomization-based null distribution.</p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb15"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_bar</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -235,11 +235,11 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"median"</span>)</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">x_tilde</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">x_tilde</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-17-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">x_tilde</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">x_tilde</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -260,11 +260,11 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"prop"</span>)</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">p_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">p_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-21-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb27"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">p_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">p_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -305,11 +305,11 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"diff in props"</span>, <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-26-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -327,11 +327,11 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"ratio of props"</span>, <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">r_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">r_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-30-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">r_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">r_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -349,11 +349,11 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"odds ratio"</span>, <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">or_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">or_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-34-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">or_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">or_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -379,20 +379,20 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"z"</span>, <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"female"</span>, <span class="st">"male"</span>))</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb50"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">z_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">z_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-39-1.png" width="576"></p>
 <p>Alternatively, visualizing the observed statistic using the theory-based null distribution,</p>
 <div class="sourceCode" id="cb51"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn_theoretical</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"theoretical"</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">z_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">z_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-40-1.png" width="576"></p>
 <p>Alternatively, visualizing the observed statistic using both of the null distributions,</p>
 <div class="sourceCode" id="cb52"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"both"</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">z_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">z_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-41-1.png" width="576"></p>
 <p>Note that the above code makes use of the randomization-based null distribution.</p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb53"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">z_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">z_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -552,11 +552,11 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"diff in means"</span>, <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>))</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb81"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-63-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb82"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -582,20 +582,20 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"t"</span>, <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>))</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb87"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-68-1.png" width="576"></p>
 <p>Alternatively, visualizing the observed statistic using the theory-based null distribution,</p>
 <div class="sourceCode" id="cb88"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn_theoretical</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"theoretical"</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-69-1.png" width="576"></p>
 <p>Alternatively, visualizing the observed statistic using both of the null distributions,</p>
 <div class="sourceCode" id="cb89"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">"both"</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-70-1.png" width="576"></p>
 <p>Note that the above code makes use of the randomization-based null distribution.</p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb90"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">t_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -617,11 +617,11 @@
   <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"diff in medians"</span>, <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>))</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb94"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-74-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb95"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">d_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -681,11 +681,11 @@
    <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"slope"</span>)</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb107"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">slope_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">slope_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-85-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb108"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">slope_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">slope_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;
@@ -706,11 +706,11 @@
    <span class="fu"><a href="../reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"correlation"</span>)</pre></body></html></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
 <div class="sourceCode" id="cb112"><html><body><pre class="r"><span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">correlation_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">correlation_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="observed_stat_examples_files/figure-html/unnamed-chunk-89-1.png" width="576"></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
 <div class="sourceCode" id="cb113"><html><body><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">correlation_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+  <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">correlation_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
 ##   p_value
 ##     &lt;dbl&gt;

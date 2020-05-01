@@ -164,13 +164,13 @@
 <span class="no">null_distribution_1_sample</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/visualize.html">visualize</a></span>() +
   <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="no">observed_statistic</span>,
-                <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+                <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="t_test_files/figure-html/visualize-1-sample-1.png" width="576"></p>
 <p>It looks like our observed statistic of 2.0852 would be relatively unlikely if the true mean was actually 40 hours a week. More exactly, we can calculate the p-value:</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># calculate the p value from the test statistic and null distribution</span>
 <span class="no">p_value_1_sample</span> <span class="kw">&lt;-</span> <span class="no">null_distribution_1_sample</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">observed_statistic</span>,
-              <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)
+              <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)
 
 <span class="no">p_value_1_sample</span></pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
@@ -236,28 +236,28 @@
 <span class="no">null_distribution_2_sample_permute</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/visualize.html">visualize</a></span>() +
   <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="no">observed_statistic</span>,
-                <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+                <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="t_test_files/figure-html/visualize-2-sample-1.png" width="576"></p>
 <p>The syntax to do the same thing with the theory-based null distribution looks similar—we just pipe in the theory-based null distribution instead, and drop in <code>method = "theoretical"</code> to <code><a href="../reference/visualize.html">visualize()</a></code>.</p>
 <div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="co"># visualize the theoretical null distribution and test statistic!</span>
 <span class="no">null_distribution_2_sample_theoretical</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"theoretical"</span>) +
   <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="no">observed_statistic</span>,
-                <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+                <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="t_test_files/figure-html/visualize-2-sample-theoreticql-1.png" width="576"></p>
 <p>We could also visualize both null distributions to get a sense of how the randomization-based and theoretical versions relate. To do so, start off with the randomization-based null distribution, and then drop in <code>method = "both"</code> to <code><a href="../reference/visualize.html">visualize()</a></code>.</p>
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="co"># visualize both null distributions and test statistic!</span>
 <span class="no">null_distribution_2_sample_permute</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/visualize.html">visualize</a></span>(<span class="kw">method</span> <span class="kw">=</span> <span class="st">"both"</span>) +
   <span class="fu"><a href="../reference/shade_p_value.html">shade_p_value</a></span>(<span class="no">observed_statistic</span>,
-                <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+                <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <p><img src="t_test_files/figure-html/visualize-2-sample-both-1.png" width="576"></p>
 <p>Regardless, it looks like our observed statistic of 1.1193 would be really unlikely if there was truly no relationship between degree status and number of hours worked. More exactly, we can calculate the p-value; theoretical p-values are not yet supported, so we’ll use the randomization-based null distribution to do calculate the p-value.</p>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="co"># calculate the p value from the randomization-based null </span>
 <span class="co"># distribution and the observed statistic</span>
 <span class="no">p_value_2_sample</span> <span class="kw">&lt;-</span> <span class="no">null_distribution_2_sample_permute</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">observed_statistic</span>,
-              <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)
+              <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)
 
 <span class="no">p_value_2_sample</span></pre></body></html></div>
 <pre><code>## # A tibble: 1 x 1
@@ -269,7 +269,7 @@
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="fu"><a href="../reference/t_test.html">t_test</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="no">gss</span>,
        <span class="kw">formula</span> <span class="kw">=</span> <span class="no">hours</span> ~ <span class="no">college</span>,
        <span class="kw">order</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"degree"</span>, <span class="st">"no degree"</span>),
-       <span class="kw">alternative</span> <span class="kw">=</span> <span class="st">"two_sided"</span>)</pre></body></html></div>
+       <span class="kw">alternative</span> <span class="kw">=</span> <span class="st">"two-sided"</span>)</pre></body></html></div>
 <pre><code>## # A tibble: 1 x 6
 ##   statistic  t_df p_value alternative lower_ci upper_ci
 ##       &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;

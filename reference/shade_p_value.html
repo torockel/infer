@@ -186,9 +186,9 @@ observed statistic is.</p></td>
     <tr>
       <th>direction</th>
       <td><p>A string specifying in which direction the shading should
-occur. Options are <code>"less"</code>, <code>"greater"</code>, or <code>"two_sided"</code>. Can
-also give <code>"left"</code>, <code>"right"</code>, or <code>"both"</code>. If <code>NULL</code> then no shading is
-actually done.</p></td>
+occur. Options are <code>"less"</code>, <code>"greater"</code>, or <code>"two-sided"</code>. Can
+also give <code>"left"</code>, <code>"right"</code>, <code>"both"</code>, <code>"two_sided"</code>, or <code>"two sided"</code>.
+If <code>NULL</code> then no shading is actually done.</p></td>
     </tr>
     <tr>
       <th>color</th>
@@ -236,7 +236,7 @@ interval.</p></div>
 <span class='co'># shade the p-value of the point estimate</span>
 <span class='no'>null_dist</span> <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='visualize.html'>visualize</a></span>() +
-  <span class='fu'>shade_p_value</span>(<span class='kw'>obs_stat</span> <span class='kw'>=</span> <span class='no'>point_estimate</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two_sided"</span>)</div><div class='img'><img src='shade_p_value-1.png' alt='' width='700' height='433' /></div><div class='input'>
+  <span class='fu'>shade_p_value</span>(<span class='kw'>obs_stat</span> <span class='kw'>=</span> <span class='no'>point_estimate</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>)</div><div class='img'><img src='shade_p_value-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># More in-depth explanation of how to use the infer package</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/vignette.html'>vignette</a></span>(<span class='st'>"infer"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: vignette ‘infer’ not found</span></div><div class='input'>
 </div></pre>
