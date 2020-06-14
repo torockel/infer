@@ -53,8 +53,7 @@
 
 
 <meta property="og:title" content="Add information about p-value region(s) — shade_p_value" />
-<meta property="og:description" content="
-shade_p_value() plots p-value region(s) (using &quot;area under the curve&quot;
+<meta property="og:description" content="shade_p_value() plots p-value region(s) (using &quot;area under the curve&quot;
 approach) on top of the visualize() output. It should be used as
 \ggplot2\ layer function (see examples). shade_pvalue() is its alias.
 Learn more in vignette(&quot;infer&quot;)." />
@@ -89,7 +88,7 @@ Learn more in vignette(&quot;infer&quot;)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">infer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -164,8 +163,7 @@ Learn more in vignette(&quot;infer&quot;)." />
     </div>
 
     <div class="ref-description">
-    <p><a href='https://www.tidyverse.org/lifecycle/#maturing'><img src='figures/lifecycle-maturing.svg' alt='Maturing lifecycle'></a></p>
-<p><code>shade_p_value()</code> plots p-value region(s) (using "area under the curve"
+    <p><code>shade_p_value()</code> plots p-value region(s) (using "area under the curve"
 approach) on top of the <code><a href='visualize.html'>visualize()</a></code> output. It should be used as
 \ggplot2\ layer function (see examples). <code>shade_pvalue()</code> is its alias.</p>
 <p>Learn more in <code><a href='../articles/infer.html'>vignette("infer")</a></code>.</p>
@@ -229,7 +227,7 @@ interval.</p></div>
   <span class='co'># hypothesizing that the mean is 40</span>
   <span class='fu'><a href='hypothesize.html'>hypothesize</a></span>(<span class='kw'>null</span> <span class='kw'>=</span> <span class='st'>"point"</span>, <span class='kw'>mu</span> <span class='kw'>=</span> <span class='fl'>40</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># generating data points for a null distribution</span>
-  <span class='fu'><a href='generate.html'>generate</a></span>(<span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>10000</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"bootstrap"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='generate.html'>generate</a></span>(<span class='kw'>reps</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"bootstrap"</span>) <span class='kw'>%&gt;%</span>
   <span class='co'># finding the null distribution</span>
   <span class='fu'><a href='calculate.html'>calculate</a></span>(<span class='kw'>stat</span> <span class='kw'>=</span> <span class='st'>"mean"</span>)
 
@@ -238,8 +236,9 @@ interval.</p></div>
   <span class='fu'><a href='visualize.html'>visualize</a></span>() +
   <span class='fu'>shade_p_value</span>(<span class='kw'>obs_stat</span> <span class='kw'>=</span> <span class='no'>point_estimate</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"two-sided"</span>)</div><div class='img'><img src='shade_p_value-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># More in-depth explanation of how to use the infer package</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/vignette.html'>vignette</a></span>(<span class='st'>"infer"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: vignette ‘infer’ not found</span></div><div class='input'>
-</div></pre>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/utils/vignette.html'>vignette</a></span>(<span class='st'>"infer"</span>)
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

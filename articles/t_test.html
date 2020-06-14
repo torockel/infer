@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">infer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -121,7 +121,7 @@
 <div id="introduction" class="section level3">
 <h3 class="hasAnchor">
 <a href="#introduction" class="anchor"></a>Introduction</h3>
-<p>In this vignette, we’ll walk through conducting t-tests using <code>infer</code>. We’ll start out with a 1-sample t-test, which compares a sample mean to a hypothesized true mean value. Then, we’ll discuss paired t-tests, which are a special use case of 1-sample t-tests, and evaluate whether differences in paired values (e.g. some measure taken of a person before and after an experiment) differ from 0. Finally, we’ll wrap up with 2-sample t-tests, testing the difference in means of two populations using a sample of data drawm from them.</p>
+<p>In this vignette, we’ll walk through conducting t-tests using <code>infer</code>. We’ll start out with a 1-sample t-test, which compares a sample mean to a hypothesized true mean value. Then, we’ll discuss paired t-tests, which are a special use case of 1-sample t-tests, and evaluate whether differences in paired values (e.g. some measure taken of a person before and after an experiment) differ from 0. Finally, we’ll wrap up with 2-sample t-tests, testing the difference in means of two populations using a sample of data drawn from them.</p>
 <p>Throughout this vignette, we’ll make use of the <code>gss</code> dataset supplied by <code>infer</code>, which contains a sample of data from the General Social Survey. See <code><a href="../reference/gss.html">?gss</a></code> for more information on the variables included and their source. Note that this data (and our examples on it) are for demonstration purposes only, and will not necessarily provide accurate estimates unless weighted properly. For these examples, let’s suppose that this dataset is a representative sample of a population we want to learn about: American adults. The data looks like this:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">glimpse</a></span>(<span class="no">gss</span>)</pre></body></html></div>
 <pre><code>## Rows: 500
@@ -216,7 +216,7 @@
 <p>Note that, in the line <code><a href="../reference/specify.html">specify(hours ~ college)</a></code>, we could have swapped this out with the syntax <code><a href="../reference/specify.html">specify(response = hours, explanatory = college)</a></code>!</p>
 <p>The <code>order</code> argument in that <code>calculate</code> line gives the order to subtract the mean values in: in our case, we’re taking the mean number of hours worked by those with a degree minus the mean number of hours worked by those without a degree; a positive difference, then, would mean that people with degrees worked more than those without a degree.</p>
 <p>Now, we want to compare this <span class="math inline">\(t\)</span>-statistic to a null distribution, generated under the assumption that the number of hours worked a week has no relationship with whether or not one has a college degree, to get a sense of how likely it would be for us to see this <span class="math inline">\(t\)</span>-statistic if there were really no relationship between these two variables.</p>
-<p>We can <code>generate</code> the null distribution using permutation, where, for each replicate, each value of degree status will be randomly reassigned (without replacement) to a new number of hours worked per week in the sample in order to break any assocation between the two.</p>
+<p>We can <code>generate</code> the null distribution using permutation, where, for each replicate, each value of degree status will be randomly reassigned (without replacement) to a new number of hours worked per week in the sample in order to break any association between the two.</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="co"># generate the null distribution with randomization</span>
 <span class="no">null_distribution_2_sample_permute</span> <span class="kw">&lt;-</span> <span class="no">gss</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="../reference/specify.html">specify</a></span>(<span class="no">hours</span> ~ <span class="no">college</span>) <span class="kw">%&gt;%</span>
