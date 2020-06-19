@@ -132,13 +132,19 @@
 <a href="#installation" class="anchor"></a>Installation</h3>
 <hr>
 <p>To install the current stable version of <code>infer</code> from CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"infer"</span>)</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"infer"</span>)
+</pre></div>
 <p>To install the developmental stable version of <code>infer</code>, make sure to install <code>remotes</code> first. The <code>pkgdown</code> website for this version is at <a href="https://infer.netlify.com" class="uri">https://infer.netlify.com</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)
-<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"tidymodels/infer"</span>)</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)
+<span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"tidymodels/infer"</span>)
+</pre></div>
 <p>To install the experimental version of <code>infer</code> (do so at your own risk), make sure to install <code>remotes</code> first.</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)
-<span class="kw pkg">remotes</span><span class="kw ns">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"tidymodels/infer"</span>, <span class="kw">ref</span> <span class="kw">=</span> <span class="st">"develop"</span>)</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"remotes"</span>)
+<span class="kw">remotes</span>::<span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span>(<span class="st">"tidymodels/infer"</span>, ref = <span class="st">"develop"</span>)
+</pre></div>
 <p>To see documentation for the experimental version of <code>infer</code>, the <code>pkgdown</code> site is available at <a href="https://infer-dev.netlify.com" class="uri">https://infer-dev.netlify.com</a>.</p>
 </div>
 <div id="contributing" class="section level3">
@@ -152,11 +158,13 @@
 <a href="#examples" class="anchor"></a>Examples</h3>
 <hr>
 <p>These examples are pulled from the “Full infer Pipeline Examples” vignette, accessible by calling <code><a href="articles/observed_stat_examples.html">vignette("observed_stat_examples")</a></code>. They make use of the <code>gss</code> dataset supplied by the package, providing a sample of data from the <a href="https://gss.norc.org">General Social Survey</a>. The data looks like this:</p>
-<div class="sourceCode" id="cb4"><pre class="r"><span class="co"># load in the dataset</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">gss</span>)
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="co"># load in the dataset</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">gss</span>)
 
 <span class="co"># take a glimpse at it</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="no">gss</span>)</pre></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(<span class="kw">gss</span>)
+</pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">## Classes 'tbl_df', 'tbl' and 'data.frame':    500 obs. of  11 variables:</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">##  $ year   : num  2014 1994 1998 1996 1994 ...</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3">##  $ age    : num  36 34 24 42 31 32 48 36 30 33 ...</a>
@@ -171,22 +179,30 @@
 <a class="sourceLine" id="cb5-12" data-line-number="12">##  $ weight : num  0.896 1.083 0.55 1.086 1.083 ...</a></code></pre></div>
 <p>As an example, we’ll run an analysis of variance on <code>age</code> and <code>partyid</code>, testing whether the age of a respondent is independent of their political party affiliation.</p>
 <p>Calculating the observed statistic,</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="no">F_hat</span> <span class="kw">&lt;-</span> <span class="no">gss</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="reference/specify.html">specify</a></span>(<span class="no">age</span> ~ <span class="no">partyid</span>) <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"F"</span>)</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="kw">F_hat</span> <span class="op">&lt;-</span> <span class="kw">gss</span> <span class="op">%&gt;%</span> 
+  <span class="fu"><a href="reference/specify.html">specify</a></span>(<span class="kw">age</span> <span class="op">~</span> <span class="kw">partyid</span>) <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/calculate.html">calculate</a></span>(stat = <span class="st">"F"</span>)
+</pre></div>
 <p>Then, generating the null distribution,</p>
-<div class="sourceCode" id="cb7"><pre class="r"><span class="no">null_distn</span> <span class="kw">&lt;-</span> <span class="no">gss</span> <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="reference/specify.html">specify</a></span>(<span class="no">age</span> ~ <span class="no">partyid</span>) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="reference/hypothesize.html">hypothesize</a></span>(<span class="kw">null</span> <span class="kw">=</span> <span class="st">"independence"</span>) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="reference/generate.html">generate</a></span>(<span class="kw">reps</span> <span class="kw">=</span> <span class="fl">1000</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"permute"</span>) <span class="kw">%&gt;%</span>
-   <span class="fu"><a href="reference/calculate.html">calculate</a></span>(<span class="kw">stat</span> <span class="kw">=</span> <span class="st">"F"</span>)</pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="kw">null_distn</span> <span class="op">&lt;-</span> <span class="kw">gss</span> <span class="op">%&gt;%</span>
+   <span class="fu"><a href="reference/specify.html">specify</a></span>(<span class="kw">age</span> <span class="op">~</span> <span class="kw">partyid</span>) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="reference/hypothesize.html">hypothesize</a></span>(null = <span class="st">"independence"</span>) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="reference/generate.html">generate</a></span>(reps = <span class="fl">1000</span>, type = <span class="st">"permute"</span>) <span class="op">%&gt;%</span>
+   <span class="fu"><a href="reference/calculate.html">calculate</a></span>(stat = <span class="st">"F"</span>)
+</pre></div>
 <p>Visualizing the observed statistic alongside the null distribution,</p>
-<div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="reference/visualize.html">visualize</a></span>(<span class="no">null_distn</span>) +
-  <span class="fu"><a href="reference/shade_p_value.html">shade_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">F_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"greater"</span>)</pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit">
+<span class="fu"><a href="reference/visualize.html">visualize</a></span>(<span class="kw">null_distn</span>) <span class="op">+</span>
+  <span class="fu"><a href="reference/shade_p_value.html">shade_p_value</a></span>(obs_stat = <span class="kw">F_hat</span>, direction = <span class="st">"greater"</span>)
+</pre></div>
 <p><img src="README_files/figure-gfm/unnamed-chunk-6-1.png"><!-- --></p>
 <p>Calculating the p-value from the null distribution and observed statistic,</p>
-<div class="sourceCode" id="cb9"><pre class="r"><span class="no">null_distn</span> <span class="kw">%&gt;%</span>
-  <span class="fu"><a href="reference/get_p_value.html">get_p_value</a></span>(<span class="kw">obs_stat</span> <span class="kw">=</span> <span class="no">F_hat</span>, <span class="kw">direction</span> <span class="kw">=</span> <span class="st">"greater"</span>)</pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="kw">null_distn</span> <span class="op">%&gt;%</span>
+  <span class="fu"><a href="reference/get_p_value.html">get_p_value</a></span>(obs_stat = <span class="kw">F_hat</span>, direction = <span class="st">"greater"</span>)
+</pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode R"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">## # A tibble: 1 x 1</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2">##   p_value</a>
 <a class="sourceLine" id="cb10-3" data-line-number="3">##     &lt;dbl&gt;</a>
