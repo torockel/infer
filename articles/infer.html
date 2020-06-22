@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">infer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9000</span>
       </span>
     </div>
 
@@ -474,9 +474,9 @@
                           type = <span class="st">"se"</span>)
 </pre></div>
 <pre><code>## # A tibble: 1 x 2
-##   lower upper
-##   &lt;dbl&gt; &lt;dbl&gt;
-## 1  40.1  42.7</code></pre>
+##   lower_ci upper_ci
+##      &lt;dbl&gt;    &lt;dbl&gt;
+## 1     40.1     42.7</code></pre>
 <p>As you can see, 40 hours per week is not contained in this interval, which aligns with our previous conclusion that this finding is significant at the confidence level <span class="math inline">\(\alpha = .05\)</span>.</p>
 </div>
 <div id="theoretical-methods" class="section level3">

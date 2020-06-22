@@ -84,7 +84,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">infer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9000</span>
       </span>
     </div>
 
@@ -157,6 +157,30 @@
       <small>Source: <a href='https://github.com/tidymodels/infer/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="infer-development-version" class="section level1">
+<h1 class="page-header" data-toc-text="development version">
+<a href="#infer-development-version" class="anchor"></a>infer (development version)<small> Unreleased </small>
+</h1>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>
+<code>get_confidence_interval()</code> now uses consistent column names (‘lower_ci’ and ‘upper_ci’) in output (<a href='https://github.com/tidymodels/infer/issues/317'>#317</a>).</li>
+</ul>
+</div>
+<div id="new-functionality" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-functionality" class="anchor"></a>New functionality</h2>
+<ul>
+<li>Implement new type <code>"bias-corrected"</code> for <code>get_confidence_interval()</code> to produce bias-corrected confidence intervals (<a href='https://github.com/tidymodels/infer/issues/237'>#237</a>, <a href='https://github.com/tidymodels/infer/issues/318'>#318</a>). Thanks to <a href='https://github.com/davidbaniadam'>@davidbaniadam</a> for initial implementation.</li>
+</ul>
+</div>
+<div id="other" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other" class="anchor"></a>Other</h2>
+</div>
+</div>
     <div id="infer-0-5-2" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.2">
 <a href="#infer-0-5-2" class="anchor"></a>infer 0.5.2<small> 2020-06-14 </small>
@@ -192,9 +216,9 @@
 <h1 class="page-header" data-toc-text="0.5.0">
 <a href="#infer-0-5-0" class="anchor"></a>infer 0.5.0<small> 2019-09-27 </small>
 </h1>
-<div id="breaking-changes" class="section level2">
+<div id="breaking-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>
 <code>shade_confidence_interval()</code> now plots vertical lines starting from zero (previously - from the bottom of a plot) (<a href='https://github.com/tidymodels/infer/issues/234'>#234</a>).</li>
@@ -202,9 +226,9 @@
 <code>shade_p_value()</code> now uses “area under the curve” approach to shading (<a href='https://github.com/tidymodels/infer/issues/229'>#229</a>).</li>
 </ul>
 </div>
-<div id="other" class="section level2">
+<div id="other-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other" class="anchor"></a>Other</h2>
+<a href="#other-1" class="anchor"></a>Other</h2>
 <ul>
 <li>Updated <code>chisq_test()</code> to take arguments in a response/explanatory format, perform goodness of fit tests, and default to the approximation approach (<a href='https://github.com/tidymodels/infer/issues/241'>#241</a>).</li>
 <li>Updated <code>chisq_stat()</code> to do goodness of fit (<a href='https://github.com/tidymodels/infer/issues/241'>#241</a>).</li>
@@ -226,9 +250,9 @@
 <h1 class="page-header" data-toc-text="0.4.0">
 <a href="#infer-0-4-0" class="anchor"></a>infer 0.4.0<small> 2018-11-15 </small>
 </h1>
-<div id="breaking-changes-1" class="section level2">
+<div id="breaking-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes-1" class="anchor"></a>Breaking changes</h2>
+<a href="#breaking-changes-2" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>Changed method of computing two-sided p-value to a more conventional one. It also makes <code>get_pvalue()</code> and <code>visualize()</code> more aligned (<a href='https://github.com/tidymodels/infer/issues/205'>#205</a>).</li>
 </ul>
@@ -252,9 +276,9 @@
 <code>shade_confidence_interval()</code> - {ggplot2}-like layer function to add information about confidence interval region to <code>visualize()</code> output. Has alias <code>shade_ci()</code>.</li>
 </ul>
 </div>
-<div id="other-1" class="section level2">
+<div id="other-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-1" class="anchor"></a>Other</h2>
+<a href="#other-2" class="anchor"></a>Other</h2>
 <ul>
 <li>Account for <code>NULL</code> value in left hand side of formula in <code>specify()</code> (<a href='https://github.com/tidymodels/infer/issues/156'>#156</a>) and <code>type</code> in <code>generate()</code> (<a href='https://github.com/tidymodels/infer/issues/157'>#157</a>).</li>
 <li>Update documentation code to follow tidyverse style guide (<a href='https://github.com/tidymodels/infer/issues/159'>#159</a>).</li>

@@ -87,7 +87,7 @@ Learn more in vignette(&quot;infer&quot;)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">infer</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2.9000</span>
       </span>
     </div>
 
@@ -194,19 +194,20 @@ Default value is 0.95.</p></td>
       <th>type</th>
       <td><p>A string giving which method should be used for creating the
 confidence interval. The default is <code>"percentile"</code> with <code>"se"</code>
-corresponding to (multiplier * standard error) as the other option.</p></td>
+corresponding to (multiplier * standard error) and <code>"bias-corrected"</code> for
+bias-corrected interval as other options.</p></td>
     </tr>
     <tr>
       <th>point_estimate</th>
       <td><p>A numeric value or a 1x1 data frame set to <code>NULL</code> by
-default. Needed to be provided if <code>type = "se"</code>.</p></td>
+default. Needed to be provided if <code>type</code> is <code>"se"</code> or <code>"bias-corrected"</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A 1 x 2 tibble with values corresponding to lower and upper values in
-the confidence interval.</p>
+    <p>A 1 x 2 tibble with 'lower_ci' and 'upper_ci' columns. Values
+correspond to lower and upper bounds of the confidence interval.</p>
     <h2 class="hasAnchor" id="aliases"><a class="anchor" href="#aliases"></a>Aliases</h2>
 
     
@@ -232,14 +233,16 @@ the confidence interval.</p>
   <span class='fu'>generate</span>(reps = <span class='fl'>1000</span>, type = <span class='st'>"bootstrap"</span>) <span class='op'>%&gt;%</span>
   <span class='co'># finding the null distribution</span>
   <span class='fu'>calculate</span>(stat = <span class='st'>"mean"</span>) <span class='op'>%&gt;%</span>
-  <span class='fu'>get_confidence_interval</span>(point_estimate = <span class='kw'>point_estimate</span>,
-                          <span class='co'># at the 95% confidence level</span>
-                          level = <span class='fl'>.95</span>,
-                          <span class='co'># using the standard error method</span>
-                          type = <span class='st'>"se"</span>)</div><div class='output co'>#&gt; # A tibble: 1 x 2
-#&gt;   lower upper
-#&gt;   &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1  40.1  42.7</div><div class='input'>  
+  <span class='fu'>get_confidence_interval</span>(
+    point_estimate = <span class='kw'>point_estimate</span>,
+    <span class='co'># at the 95% confidence level</span>
+    level = <span class='fl'>0.95</span>,
+    <span class='co'># using the standard error method</span>
+    type = <span class='st'>"se"</span>
+  )</div><div class='output co'>#&gt; # A tibble: 1 x 2
+#&gt;   lower_ci upper_ci
+#&gt;      &lt;dbl&gt;    &lt;dbl&gt;
+#&gt; 1     40.1     42.7</div><div class='input'>  
 <span class='co'># More in-depth explanation of how to use the infer package</span>
 <span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/utils/vignette.html'>vignette</a></span>(<span class='st'>"infer"</span>)
